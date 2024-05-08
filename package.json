@@ -1,0 +1,12 @@
+{
+  "name": "Darts",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "sass": "^1.77.0"
+  },
+  "scripts": {
+    "build-sass": "sass src/main/resources/static/scss/ src/main/resources/static/css/"
+  }
+}

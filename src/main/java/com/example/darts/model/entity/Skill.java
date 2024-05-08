@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import java.util.List;
@@ -18,6 +18,8 @@ public class Skill extends BaseEntity{
     @Column
     @Range(min = 1, max = 100)
     private Integer percentage;
-    @ManyToMany(mappedBy = "skills")
+    @ManyToMany
     private List<Account> accounts;
+    @ManyToMany
+    private List<JobApplication> jobApplications;
 }
