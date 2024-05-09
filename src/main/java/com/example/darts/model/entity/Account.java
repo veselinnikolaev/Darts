@@ -29,4 +29,6 @@ public class Account extends BaseEntity {
     private List<Service> services;
     @ManyToMany(mappedBy = "accounts")
     private List<Skill> skills;
+    @ManyToMany(mappedBy = "accounts")
+    private List<Company> companies;
 }

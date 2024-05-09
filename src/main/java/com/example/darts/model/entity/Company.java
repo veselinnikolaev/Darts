@@ -17,4 +17,6 @@ public class Company extends BaseEntity{
     private List<Location> locations;
     @OneToMany(mappedBy = "company")
     private List<JobApplication> jobApplications;
+    @ManyToMany
+    private List<Account> accounts;
 }

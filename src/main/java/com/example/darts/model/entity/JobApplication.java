@@ -4,9 +4,7 @@ import com.example.darts.model.enumeration.Category;
 import com.example.darts.model.enumeration.JobNature;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "job_applications")
 @Data
-public class JobApplication extends BaseEntity{
+public class JobApplication extends BaseEntity {
     private String name;
     @ManyToOne
     private Company company;
