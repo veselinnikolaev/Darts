@@ -5,12 +5,15 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Entity
 @Table(name = "accounts")
 @Data
+@SuperBuilder
+@NoArgsConstructor
 public class Account extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String firstName;

@@ -6,11 +6,13 @@ import com.example.darts.repository.LocationRepository;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class LocationInit implements CommandLineRunner {
     private final Gson gson;
