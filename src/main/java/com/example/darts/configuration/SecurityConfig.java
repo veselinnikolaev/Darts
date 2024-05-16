@@ -19,7 +19,7 @@ public class SecurityConfig {
                         // All static resources which are situated in js, images, css are available for anyone
                         .requestMatchers("/js/**", "/css/**", "/img/**", "/fonts/**", "/scss/**").permitAll()
                         // Allow anyone to see the home page, the registration page and the login form
-                        .requestMatchers("/", "/users/login", "/users/register").permitAll()
+                        .requestMatchers("/", "/account/login", "/account/register").permitAll()
                         //.requestMatchers().hasRole(UserRoleEnum.ADMIN.name())
                         // all other requests are authenticated.
                         .anyRequest().authenticated()
@@ -31,7 +31,7 @@ public class SecurityConfig {
                         // The names of the input fields (in our case in auth-login.html)
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/account/login?error")
         ).logout(
                 logout -> logout

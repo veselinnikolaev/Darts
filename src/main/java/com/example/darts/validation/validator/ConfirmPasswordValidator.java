@@ -1,6 +1,6 @@
 package com.example.darts.validation.validator;
 
-import com.example.darts.model.binding.AccountBindingModel;
+import com.example.darts.model.binding.AccountRegisterBindingModel;
 import com.example.darts.validation.annotation.ConfirmPassword;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -8,7 +8,7 @@ import jakarta.validation.ConstraintValidatorContext;
 public class ConfirmPasswordValidator implements ConstraintValidator<ConfirmPassword, String> {
     private static String passwordToConfirm;
     private static String confirmPassword;
-    public static void getObject(AccountBindingModel userRegisterBindingModel){
+    public static void getObject(AccountRegisterBindingModel userRegisterBindingModel){
         passwordToConfirm = userRegisterBindingModel.getPassword();
         confirmPassword = userRegisterBindingModel.getConfirmPassword();
     }

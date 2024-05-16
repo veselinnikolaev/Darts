@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form th:action="@{/account/register}" th:method="POST" th:object="${account}">
+    <div class="form-group">
+        <label for="firstName" class="font-weight-bold text-light">First name</label>
+        <input type="text" class="form-control" id="firstName" placeholder="First name..." name="firstName"
+               th:errorclass="bg-danger" th:value="*{firstName}">
+
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('firstName')}">
+            <small class="text-danger" th:errors="*{firstName}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label for="lastName" class="font-weight-bold text-light">Last name</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Last name..." name="lastName"
+               th:errorclass="bg-danger" th:value="*{lastName}">
+
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('lastName')}">
+            <small class="text-danger" th:errors="*{lastName}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label for="password" class="font-weight-bold text-light">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password..." name="password"
+               th:errorclass="bg-danger" th:value="*{password}">
+
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('password')}">
+            <small class="text-danger" th:errors="*{password}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword" class="font-weight-bold text-light">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password..."
+               name="confirmPassword" th:errorclass="bg-danger">
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('confirmPassword')}">
+            <small class="text-danger" th:errors="*{confirmPassword}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email" class="font-weight-bold text-light">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Email..." name="email"
+               th:errorclass="bg-danger" th:value="*{email}">
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('email')}">
+            <small class="text-danger" th:errors="*{email}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="phone" class="font-weight-bold text-light">Phone number</label>
+        <input type="text" class="form-control" id="phone" placeholder="Phone..." name="phone"
+               th:errorclass="bg-danger" th:value="*{phone}">
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('phone')}">
+            <small class="text-danger" th:errors="*{phone}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="about" class="font-weight-bold text-light">About</label>
+        <input type="text" class="form-control" id="about" placeholder="About..." name="about"
+               th:errorclass="bg-danger" th:value="*{about}">
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('about')}">
+            <small class="text-danger" th:errors="*{about}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <hr class="hr-2 bg-white">
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn btn-dark">Register</button>
+    </div>
+</form>
+
+</body>
+</html>

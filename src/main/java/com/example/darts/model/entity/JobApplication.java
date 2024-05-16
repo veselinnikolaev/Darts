@@ -5,6 +5,7 @@ import com.example.darts.model.enumeration.JobNature;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,4 +33,5 @@ public class JobApplication extends BaseEntity {
     private String description;
     @Enumerated(EnumType.STRING)
     private Category category;
+    private String photo;
 }

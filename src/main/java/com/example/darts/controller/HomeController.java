@@ -41,11 +41,6 @@ public class HomeController {
         return new ModelAndView("job_details");
     }
 
-    @GetMapping("/home")
-    public ModelAndView main() {
-        return new ModelAndView("main");
-    }
-
     @GetMapping("/blog/single")
     public ModelAndView singleBlog() {
         return new ModelAndView("single-blog");
