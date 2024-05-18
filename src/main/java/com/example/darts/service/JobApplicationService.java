@@ -6,6 +6,8 @@ import com.example.darts.model.enumeration.Category;
 import com.example.darts.repository.JobApplicationRepository;
 import com.example.darts.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,20 @@ public class JobApplicationService {
     private final JobApplicationRepository repository;
     private final LocationRepository locationRepository;
 
-    public List<JobApplication> getAllJobApplications() {
-        return repository.findAll();
+    public Page<JobApplication> getAllJobApplications(String keyword, String location, Pageable pageable) {
+        if ("all".equals(keyword) && "all".equals(location)) {
+            return repository.findAll(pageable);
+        }
+
+        Specification<JobApplication> spec = Specification.where(hasKeyword(keyword));
+
+        if (!"all".equals(location)) {
+            Location locationEntity = locationRepository.findById(Long.parseLong(location))
+                    .orElseThrow(() -> new RuntimeException("Location not found"));
+            spec = spec.and(hasLocation(locationEntity));
+        }
+
+        return repository.findAll(spec, pageable);
     }
 
     public JobApplication getJobApplicationById(Long id) {
@@ -29,12 +43,12 @@ public class JobApplicationService {
                 .orElseThrow(() -> new RuntimeException("Job application not found"));
     }
 
-    public List<JobApplication> getJobApplicationsByCategory(Category category) {
-        return repository.findAllByCategory(category);
+    public Page<JobApplication> getJobApplicationsByCategory(Category category, Pageable pageable) {
+        return repository.findAllByCategory(category, pageable);
     }
 
-    public List<JobApplication> getTop5JobApplicationsByDatePosted() {
-        return repository.findTop5ByOrderByPostedDesc();
+    public Page<JobApplication> getTop5JobApplicationsByDatePosted(Pageable pageable) {
+        return repository.findTop5ByOrderByPostedDesc(pageable);
     }
 
     public String calculateTimeAgo(LocalDate postedDate) {
@@ -57,22 +71,6 @@ public class JobApplicationService {
         }
 
         return "just now";
-    }
-
-    public List<JobApplication> getAllJobApplications(String keyword, String location) {
-        if ((keyword.equals("all")) && (location.equals("all"))) {
-            return repository.findAll();
-        }
-
-        Specification<JobApplication> spec = Specification.where(hasKeyword(keyword));
-
-        if (!(location.equals("all"))) {
-            Location locationEntity = locationRepository.findById(Long.parseLong(location))
-                    .orElseThrow(() -> new RuntimeException("Location not found"));
-            spec = spec.and(hasLocation(locationEntity));
-        }
-
-        return repository.findAll(spec);
     }
 
     private Specification<JobApplication> hasKeyword(String keyword) {

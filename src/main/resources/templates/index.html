@@ -96,8 +96,8 @@
                             <span th:class="${'flaticon-' + jobApplicationCategory.name.toLowerCase()}"></span>
                         </div>
                         <div class="services-cap">
-                            <h5><a th:href="@{/jobs/{page}(page=1)/{category}(category=${jobApplicationCategory.name().toLowerCase()})}" th:method="GET">Design & Creative</a></h5>
-                            <span th:text="${service.getJobApplicationsByCategory(jobApplicationCategory).size()}">(653)</span>
+                            <h5><a th:href="@{/jobs/{page}(page=1)/{category}(category=${jobApplicationCategory.name().toLowerCase()})}" th:method="GET" th:text="${jobApplicationCategory.label}"></a></h5>
+                            <span th:text="${categoryCounts[__${jobApplicationCategory}__]}">(653)</span>
                         </div>
                     </div>
                 </div>
@@ -144,11 +144,11 @@
             <div class="row justify-content-center">
                 <div class="col-xl-10">
                     <!-- single-job-content -->
-                    <div th:if="${service.getTop5JobApplicationsByDatePosted().isEmpty()}">
+                    <div th:if="${newestJobs.isEmpty()}">
                         <p>Looks like there's no one here.</p>
                     </div>
-                    <div class="single-job-items mb-30" th:unless="${service.getTop5JobApplicationsByDatePosted().isEmpty()}"
-                         th:each="job : ${service.getTop5JobApplicationsByDatePosted()}">
+                    <div class="single-job-items mb-30" th:unless="${newestJobs.isEmpty()}"
+                         th:each="job : ${newestJobs}">
                         <div class="job-items">
                             <div class="company-img">
                                 <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET"><img th:src="${job.company.logo}" alt=""></a>
