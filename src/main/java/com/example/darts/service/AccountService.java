@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -17,5 +19,9 @@ public class AccountService {
         account.setPassword(encoder.encode(account.getPassword()));
 
         repository.save(account);
+    }
+
+    public Account findByEmail(String email) {
+        return repository.findByEmail(email).orElseThrow(() -> new RuntimeException("Account not found"));
     }
 }

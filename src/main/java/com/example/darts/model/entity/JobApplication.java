@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "job_applications")
 @Data
 public class JobApplication extends BaseEntity {
-    private String name;
+    private String position;
     @ManyToOne
     private Company company;
     @ManyToOne
@@ -29,9 +29,12 @@ public class JobApplication extends BaseEntity {
     private LocalDate due;
     @ManyToMany(mappedBy = "jobApplications")
     private List<Skill> requiredSkills;
+    @ManyToMany(mappedBy = "jobApplications")
+    private List<Experience> requiredExperiences;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(EnumType.STRING)
     private Category category;
-    private String photo;
+    @ManyToMany(mappedBy = "jobApplications")
+    private List<Account> applicants;
 }

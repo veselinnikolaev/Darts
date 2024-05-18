@@ -13,6 +13,11 @@ import java.util.List;
 public class Company extends BaseEntity{
     @Column(unique = true)
     private String name;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    private String website;
+    private String email;
+    private String logo;
     @ManyToMany(mappedBy = "companies")
     private List<Location> locations;
     @OneToMany(mappedBy = "company")

@@ -3,10 +3,9 @@ package com.example.darts.model.entity;
 import com.example.darts.model.binding.AccountRegisterBindingModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,16 +23,18 @@ public class Account extends BaseEntity {
     private String email;
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String password;
-    @Column(nullable = false)
     private String phone;
     @Column(columnDefinition = "TEXT")
     private String about;
+    private String CV;
     @ManyToMany(mappedBy = "accounts")
-    private List<Service> services;
+    private List<Experience> experiences;
     @ManyToMany(mappedBy = "accounts")
     private List<Skill> skills;
     @ManyToMany(mappedBy = "accounts")
     private List<Company> companies;
+    @ManyToMany
+    private List<JobApplication> jobApplications;
 
     public Account(AccountRegisterBindingModel bindingModel){
         this.firstName = bindingModel.getFirstName();

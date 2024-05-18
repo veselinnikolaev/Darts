@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Register</title>
 </head>
 <body>
-
+<th:block th:replace="~{/compnent/preloader}"></th:block>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <th:block th:replace="~{/compnent/navbar}"></th:block>
+    <!-- Header End -->
+</header>
 <h2>Registration Form</h2>
 
 <form th:action="@{/account/register}" th:method="POST" th:object="${account}">
     <div class="form-group">
-        <label for="firstName" class="font-weight-bold text-light">First name</label>
+        <label for="firstName" class="font-weight-bold text-light">First name*</label>
         <input type="text" class="form-control" id="firstName" placeholder="First name..." name="firstName"
                th:errorclass="bg-danger" th:value="*{firstName}">
 
@@ -23,7 +30,7 @@
 
     </div>
     <div class="form-group">
-        <label for="lastName" class="font-weight-bold text-light">Last name</label>
+        <label for="lastName" class="font-weight-bold text-light">Last name*</label>
         <input type="text" class="form-control" id="lastName" placeholder="Last name..." name="lastName"
                th:errorclass="bg-danger" th:value="*{lastName}">
 
@@ -37,7 +44,19 @@
 
     </div>
     <div class="form-group">
-        <label for="password" class="font-weight-bold text-light">Password</label>
+        <label for="email" class="font-weight-bold text-light">Email*</label>
+        <input type="email" class="form-control" id="email" placeholder="Email..." name="email"
+               th:errorclass="bg-danger" th:value="*{email}">
+        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+             th:if="${#fields.hasErrors('email')}">
+            <small class="text-danger" th:errors="*{email}"></small>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="font-weight-bold text-light">Password*</label>
         <input type="password" class="form-control" id="password" placeholder="Password..." name="password"
                th:errorclass="bg-danger" th:value="*{password}">
 
@@ -50,24 +69,12 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="confirmPassword" class="font-weight-bold text-light">Confirm Password</label>
+        <label for="confirmPassword" class="font-weight-bold text-light">Confirm Password*</label>
         <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password..."
                name="confirmPassword" th:errorclass="bg-danger">
         <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
              th:if="${#fields.hasErrors('confirmPassword')}">
             <small class="text-danger" th:errors="*{confirmPassword}"></small>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="email" class="font-weight-bold text-light">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Email..." name="email"
-               th:errorclass="bg-danger" th:value="*{email}">
-        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
-             th:if="${#fields.hasErrors('email')}">
-            <small class="text-danger" th:errors="*{email}"></small>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -102,6 +109,10 @@
         <button type="submit" class="btn btn-dark">Register</button>
     </div>
 </form>
-
+<footer>
+    <!-- Footer Start-->
+    <th:block th:replace="~{/compnent/footer}"></th:block>
+    <!-- Footer End-->
+</footer>
 </body>
 </html>

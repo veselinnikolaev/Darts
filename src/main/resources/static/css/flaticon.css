@@ -30,13 +30,13 @@ font-style: normal;
 margin-left: 20px;
 }
 
-.flaticon-tour:before { content: "\f100"; }
-.flaticon-report:before { content: "\f101"; }
-.flaticon-cms:before { content: "\f102"; }
-.flaticon-app:before { content: "\f103"; }
-.flaticon-helmet:before { content: "\f104"; }
-.flaticon-high-tech:before { content: "\f105"; }
-.flaticon-real-estate:before { content: "\f106"; }
-.flaticon-content:before { content: "\f107"; }
+.flaticon-design_creative:before { content: "\f100"; }
+.flaticon-sales_marketing:before { content: "\f101"; }
+.flaticon-design_development:before { content: "\f102"; }
+.flaticon-mobile_application:before { content: "\f103"; }
+.flaticon-construction:before { content: "\f104"; }
+.flaticon-information_technology:before { content: "\f105"; }
+.flaticon-real_estate:before { content: "\f106"; }
+.flaticon-content_writer:before { content: "\f107"; }
 .flaticon-search:before { content: "\f108"; }
 .flaticon-curriculum-vitae:before { content: "\f109"; }
