@@ -1,5 +1,6 @@
 package com.example.darts.model.entity;
 
+import com.example.darts.model.json.SkillJSON;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -12,14 +13,16 @@ import java.util.List;
 @Entity
 @Table(name = "skills")
 @Data
+@NoArgsConstructor
 public class Skill extends BaseEntity{
     @Column(nullable = false, unique = true)
     private String name;
-    @Column
-    @Range(min = 1, max = 100)
-    private Integer percentage;
     @ManyToMany
     private List<Account> accounts;
     @ManyToMany
     private List<JobApplication> jobApplications;
+
+    public Skill(SkillJSON jSON) {
+        this.name = jSON.getName();
+    }
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Darts</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/price_rangs.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<th:block th:replace="~{/compnent/preloader}"></th:block>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <th:block th:replace="~{/compnent/navbar}"></th:block>
+    <!-- Header End -->
+</header>
+
+<h2>Log into your account</h2>
+<h3>or if you don't have an account yet, <a th:href="@{/account/register}">register</a></h3>
+
+<form th:action="@{/account/login}" th:method="POST">
+    <div class="form-group">
+        <label for="email" class="font-weight-bold form-text">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Email..."  autofocus="autofocus" name="email" th:value="${email}">
+    </div>
+    <div class="form-group">
+        <label for="password" class="font-weight-bold form-text">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password..." name="password">
+    </div>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${bad_credentials}">
+        <small class="text-danger" th:text="'Invalid login attempt'"></small>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <hr class="hr-2 bg-white">
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn post-btn">Login</button>
+    </div>
+</form>
+<footer>
+    <!-- Footer Start-->
+    <th:block th:replace="~{/compnent/footer}"></th:block>
+    <!-- Footer End-->
+</footer>
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+
+<!-- contact js -->
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

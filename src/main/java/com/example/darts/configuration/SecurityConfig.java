@@ -16,11 +16,11 @@ public class SecurityConfig {
         return httpSecurity.authorizeHttpRequests(
                 // Define which urls are visible by which users
                 authorizeRequests -> authorizeRequests
-                        // All static resources which are situated in js, images, css are available for anyone
+                        // All static resources which are situated in js, images, css... are available for anyone
                         .requestMatchers("/js/**", "/css/**", "/img/**", "/fonts/**", "/scss/**").permitAll()
-                        // Allow anyone to see the home page, the registration page and the login form
-                        .requestMatchers("/", "/account/login", "/account/register").permitAll()
-                        //.requestMatchers().hasRole(UserRoleEnum.ADMIN.name())
+                        // Allow anyone to see the home page, the registration page, the login form...
+                        .requestMatchers("/", "/account/login", "account/register", "/account/login/error",
+                                "/jobs/details/**", "/jobs/all", "/jobs/all/**", "/about", "/contact").permitAll()
                         // all other requests are authenticated.
                         .anyRequest().authenticated()
         ).formLogin(
@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/")
-                        .failureUrl("/account/login?error")
+                        .failureUrl("/account/login/error")
         ).logout(
                 logout -> logout
                         // the URL where we should POST something in order to perform the logout

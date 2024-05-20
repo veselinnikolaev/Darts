@@ -20,6 +20,8 @@ public class Location extends BaseEntity{
     private List<Company> companies;
     @OneToMany(mappedBy = "location")
     private List<JobApplication> jobApplications;
+    @OneToMany(mappedBy = "location")
+    private List<Account> accounts;
 
     public Location(LocationJSON location){
         this.city = location.getCity();

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class AccountRegisterBindingModel {
@@ -26,8 +27,10 @@ public class AccountRegisterBindingModel {
     @UniqueEmail
     @NotBlank(message = "Email cannot be empty!")
     private String email;
+    private Long location;
     //@Phone
     @NotBlank
     private String phone;
     private String about;
+    private MultipartFile photo;
 }

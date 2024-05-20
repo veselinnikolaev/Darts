@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Darts</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/price_rangs.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<th:block th:replace="~{/compnent/preloader}"></th:block>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <th:block th:replace="~{/compnent/navbar}"></th:block>
+    <!-- Header End -->
+</header>
+
+<div class="container mt-5">
+    <h2>Create a new Job Application</h2>
+    <form th:action="@{/jobs/post}" th:method="POST" th:object="${jobApplication}">
+        <div class="form-group">
+            <label for="position">Position</label>
+            <input type="text" class="form-control" id="position" name="position" th:field="*{position}" placeholder="Enter position">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></div>
+        </div>
+        <div class="form-group">
+            <label for="company">Company</label>
+            <select class="form-control" id="company" name="company" th:field="*{company}">
+                <option th:each="company : ${companies}" th:value="${company.id}" th:text="${company.name}"></option>
+            </select>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('company')}" th:errors="*{company}"></div>
+        </div>
+        <div class="form-group">
+            <label for="location">Location</label>
+            <select class="form-control" id="location" name="location" th:field="*{location}">
+                <option th:each="location : ${locations}" th:value="${location.id}"
+                        th:text="${location.city + ', ' + location.region}"></option>
+            </select>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
+        </div>
+        <div class="form-group">
+            <label for="vacancy">Vacancy</label>
+            <input type="number" class="form-control" id="vacancy" name="vacancy" th:field="*{vacancy}" placeholder="Enter number of vacancies">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('vacancy')}" th:errors="*{vacancy}"></div>
+        </div>
+        <div class="form-group">
+            <label for="salary">Salary</label>
+            <input type="number" step="0.01" class="form-control" id="salary" name="salary" th:field="*{salary}" placeholder="Enter salary">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+        </div>
+        <div class="form-group">
+            <label for="jobNature">Job Nature</label>
+            <select class="form-control" id="jobNature" name="jobNature" th:field="*{jobNature}">
+                <option th:each="nature : ${T(com.example.darts.model.enumeration.JobNature).values()}" th:value="${nature.name()}" th:text="${nature.label}"></option>
+            </select>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('jobNature')}" th:errors="*{jobNature}"></div>
+        </div>
+        <div class="form-group">
+            <label for="due">Due Date</label>
+            <input type="date" class="form-control" id="due" name="due" th:field="*{due}">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('due')}" th:errors="*{due}"></div>
+        </div>
+        <div class="form-group">
+            <label for="requiredSkills">Required Skills</label>
+            <select multiple class="form-control" id="requiredSkills" name="requiredSkills" th:field="*{requiredSkills}">
+                <option th:each="skill : ${skills}" th:value="${skill.id}" th:text="${skill.name}"></option>
+            </select>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('requiredSkills')}" th:errors="*{requiredSkills}"></div>
+        </div>
+        <div class="form-group">
+            <label for="requiredExperiences">Required Experiences</label>
+            <select multiple class="form-control" id="requiredExperiences" name="requiredExperiences" th:field="*{requiredExperiences}">
+                <option th:each="experience : ${experiences}" th:value="${experience.id}" th:text="${experience.name}"></option>
+            </select>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('requiredExperiences')}" th:errors="*{requiredExperiences}"></div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" th:field="*{description}" placeholder="Enter job description"></textarea>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="category" th:field="*{category}">
+                <option th:each="category : ${T(com.example.darts.model.enumeration.Category).values()}" th:value="${category.name()}" th:text="${category.label}"></option>
+            </select>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<footer>
+    <!-- Footer Start-->
+    <th:block th:replace="~{/compnent/footer}"></th:block>
+    <!-- Footer End-->
+</footer>
+
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+
+<!-- contact js -->
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

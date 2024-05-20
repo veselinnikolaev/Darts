@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Java"
+  },
+  {
+    "name": "Python"
+  },
+  {
+    "name": "JavaScript"
+  },
+  {
+    "name": "SQL"
+  },
+  {
+    "name": "HTML"
+  },
+  {
+    "name": "CSS"
+  },
+  {
+    "name": "C++"
+  },
+  {
+    "name": "C#"
+  },
+  {
+    "name": "Ruby"
+  },
+  {
+    "name": "PHP"
+  },
+  {
+    "name": "Swift"
+  },
+  {
+    "name": "Kotlin"
+  },
+  {
+    "name": "Git"
+  },
+  {
+    "name": "Docker"
+  },
+  {
+    "name": "AWS"
+  },
+  {
+    "name": "Azure"
+  },
+  {
+    "name": "Machine Learning"
+  },
+  {
+    "name": "Data Science"
+  },
+  {
+    "name": "DevOps"
+  },
+  {
+    "name": "Agile"
+  },
+  {
+    "name": "Scrum"
+  },
+  {
+    "name": "React"
+  },
+  {
+    "name": "Angular"
+  },
+  {
+    "name": "Vue.js"
+  },
+  {
+    "name": "Node.js"
+  },
+  {
+    "name": "Spring"
+  },
+  {
+    "name": "Django"
+  },
+  {
+    "name": "Flask"
+  },
+  {
+    "name": "TensorFlow"
+  },
+  {
+    "name": "Pandas"
+  }
+]

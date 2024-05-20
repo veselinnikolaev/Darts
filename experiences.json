@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Software Development",
+    "description": "Experience in designing, implementing, and maintaining software applications using various programming languages and technologies."
+  },
+  {
+    "name": "Project Management",
+    "description": "Experience in planning, executing, and closing projects, ensuring that project goals are met within scope, time, and budget constraints."
+  },
+  {
+    "name": "Database Management",
+    "description": "Experience in designing, implementing, and managing databases, ensuring data integrity, security, and performance."
+  },
+  {
+    "name": "System Administration",
+    "description": "Experience in managing and maintaining computer systems, networks, and servers to ensure optimal performance and security."
+  },
+  {
+    "name": "Quality Assurance",
+    "description": "Experience in developing and executing test plans and test cases to ensure software quality and identify defects."
+  },
+  {
+    "name": "Technical Support",
+    "description": "Experience in providing technical assistance to end-users, resolving hardware and software issues, and maintaining IT systems."
+  },
+  {
+    "name": "Business Analysis",
+    "description": "Experience in analyzing business needs, gathering requirements, and providing solutions to improve business processes and systems."
+  },
+  {
+    "name": "UI/UX Design",
+    "description": "Experience in designing user interfaces and user experiences that are visually appealing and easy to use."
+  },
+  {
+    "name": "Data Analysis",
+    "description": "Experience in collecting, processing, and analyzing data to generate insights and support decision-making."
+  },
+  {
+    "name": "Cloud Computing",
+    "description": "Experience in designing, deploying, and managing cloud-based applications and services on platforms like AWS, Azure, or Google Cloud."
+  },
+  {
+    "name": "DevOps",
+    "description": "Experience in implementing and managing CI/CD pipelines, automating processes, and improving collaboration between development and operations teams."
+  },
+  {
+    "name": "Cybersecurity",
+    "description": "Experience in identifying, analyzing, and mitigating security threats, and implementing security measures to protect systems and data."
+  },
+  {
+    "name": "Network Engineering",
+    "description": "Experience in designing, implementing, and managing network infrastructure to ensure connectivity, performance, and security."
+  },
+  {
+    "name": "Machine Learning",
+    "description": "Experience in developing and deploying machine learning models to solve complex problems and make data-driven decisions."
+  },
+  {
+    "name": "Product Management",
+    "description": "Experience in managing the product lifecycle, from ideation to launch, and ensuring products meet market needs and business goals."
+  },
+  {
+    "name": "Mobile Development",
+    "description": "Experience in developing and maintaining mobile applications for iOS and Android platforms using native or cross-platform frameworks."
+  },
+  {
+    "name": "Agile Methodologies",
+    "description": "Experience in implementing and practicing Agile methodologies such as Scrum or Kanban to improve project management and team collaboration."
+  },
+  {
+    "name": "Salesforce Administration",
+    "description": "Experience in managing Salesforce CRM, including configuring, customizing, and maintaining the platform to meet business requirements."
+  },
+  {
+    "name": "Digital Marketing",
+    "description": "Experience in planning and executing digital marketing campaigns, including SEO, SEM, social media, and email marketing."
+  },
+  {
+    "name": "IT Consulting",
+    "description": "Experience in providing expert advice to organizations on how to use IT to achieve their business objectives and improve processes."
+  }
+]

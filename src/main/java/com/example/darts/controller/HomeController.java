@@ -6,12 +6,14 @@ import com.example.darts.model.enumeration.Category;
 import com.example.darts.repository.LocationRepository;
 import com.example.darts.service.AccountService;
 import com.example.darts.service.JobApplicationService;
+import com.example.darts.service.LocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,11 +26,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class HomeController {
     private final JobApplicationService jobApplicationService;
-    private final LocationRepository locationRepository;
+    private final LocationService locationService;
     private final AccountService accountService;
     @GetMapping("/")
     public ModelAndView index(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
-        ModelAndView mv = new ModelAndView("index");
+        ModelAndView mv = new ModelAndView("/common/index");
         Pageable pageable = PageRequest.of(page, size);
         Map<Category, Long> categoryCounts = new HashMap<>();
         for (Category category : Category.values()) {
@@ -39,21 +41,35 @@ public class HomeController {
         }
         mv.addObject("categoryCounts", categoryCounts);
         mv.addObject("service", jobApplicationService);
-        mv.addObject("locations", locationRepository.findAll());
-        mv.addObject("newestJobs", jobApplicationService.getTop5JobApplicationsByDatePosted(pageable).getContent());
+        mv.addObject("locations", locationService.getAll());
+        mv.addObject("newestJobs", jobApplicationService.getTop5JobApplicationsByDatePosted());
         return mv;
+    }
+
+    @PostMapping("/")
+    public ModelAndView search(String keyword,
+                               String location,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "5") int size) {
+        System.out.println(keyword + location);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<JobApplication> jobsPage = jobApplicationService.getAllJobApplications(keyword, location, pageable);
+        return new ModelAndView("redirect:/job/job_listing")
+                .addObject("jobsPage", jobsPage)
+                .addObject("service", jobApplicationService)
+                .addObject("locations", locationService.getAll());
     }
 
     @GetMapping("/about")
     public ModelAndView about(Principal principal) {
         Account account = accountService.findByEmail(principal.getName());
 
-        return new ModelAndView("about")
+        return new ModelAndView("/common/about")
                 .addObject("user", account);
     }
 
     @GetMapping("/contact")
     public ModelAndView contact() {
-        return new ModelAndView("contact");
+        return new ModelAndView("/common/contact");
     }
 }

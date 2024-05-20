@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Darts - Create Company</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/price_rangs.css">
+  <link rel="stylesheet" href="/css/slicknav.css">
+  <link rel="stylesheet" href="/css/animate.min.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/css/themify-icons.css">
+  <link rel="stylesheet" href="/css/slick.css">
+  <link rel="stylesheet" href="/css/nice-select.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<th:block th:replace="~{/compnent/preloader}"></th:block>
+<!-- Preloader Start -->
+<header>
+  <!-- Header Start -->
+  <th:block th:replace="~{/compnent/navbar}"></th:block>
+  <!-- Header End -->
+</header>
+
+<div class="container mt-5">
+  <h2>Create a new Company</h2>
+  <form th:action="@{/companies/post}" th:method="POST" th:object="${company}">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Enter company name">
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description" th:field="*{description}" placeholder="Enter company description"></textarea>
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    </div>
+    <div class="form-group">
+      <label for="website">Website</label>
+      <input type="url" class="form-control" id="website" name="website" th:field="*{website}" placeholder="Enter company website">
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('website')}" th:errors="*{website}"></div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" th:field="*{email}" placeholder="Enter company email">
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    </div>
+    <div class="form-group">
+      <label for="logo">Logo</label>
+      <input type="file" class="form-control" id="logo" name="logo" th:field="*{logo}" placeholder="Enter logo URL">
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('logo')}" th:errors="*{logo}"></div>
+    </div>
+    <div class="form-group">
+      <label for="locations">Locations</label>
+      <select multiple class="form-control" id="locations" name="locations" th:field="*{locations}">
+        <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.city + ', ' + location.region}"></option>
+      </select>
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('locations')}" th:errors="*{locations}"></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<footer>
+  <!-- Footer Start-->
+  <th:block th:replace="~{/compnent/footer}"></th:block>
+  <!-- Footer End-->
+</footer>
+
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+
+<!-- contact js -->
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

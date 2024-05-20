@@ -1,10 +1,9 @@
 package com.example.darts.service;
 
-import com.example.darts.model.entity.JobApplication;
-import com.example.darts.model.entity.Location;
+import com.example.darts.model.binding.JobApplicationBindingModel;
+import com.example.darts.model.entity.*;
 import com.example.darts.model.enumeration.Category;
 import com.example.darts.repository.JobApplicationRepository;
-import com.example.darts.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,18 +19,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JobApplicationService {
     private final JobApplicationRepository repository;
-    private final LocationRepository locationRepository;
+    private final LocationService locationService;
+    private final CompanyService companyService;
+    private final SkillService skillService;
+    private final ExperienceService experienceService;
+
+    public Page<JobApplication> getAllJobApplications(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
 
     public Page<JobApplication> getAllJobApplications(String keyword, String location, Pageable pageable) {
-        if ("all".equals(keyword) && "all".equals(location)) {
+        if ((keyword.isEmpty() || keyword.isBlank()) && location.equals("all")) {
             return repository.findAll(pageable);
         }
 
         Specification<JobApplication> spec = Specification.where(hasKeyword(keyword));
 
-        if (!"all".equals(location)) {
-            Location locationEntity = locationRepository.findById(Long.parseLong(location))
-                    .orElseThrow(() -> new RuntimeException("Location not found"));
+        if (!location.equals("all")) {
+            Location locationEntity = locationService.getById(Long.parseLong(location));
             spec = spec.and(hasLocation(locationEntity));
         }
 
@@ -47,8 +52,8 @@ public class JobApplicationService {
         return repository.findAllByCategory(category, pageable);
     }
 
-    public Page<JobApplication> getTop5JobApplicationsByDatePosted(Pageable pageable) {
-        return repository.findTop5ByOrderByPostedDesc(pageable);
+    public List<JobApplication> getTop5JobApplicationsByDatePosted() {
+        return repository.findTop5ByOrderByPostedDesc();
     }
 
     public String calculateTimeAgo(LocalDate postedDate) {
@@ -80,7 +85,9 @@ public class JobApplicationService {
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("position")), likePattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), likePattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("company").get("name")), likePattern),
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("location").get("name")), likePattern)
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("company").get("description")), likePattern),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("location").get("city")), likePattern),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("location").get("region")), likePattern)
             );
         };
     }
@@ -92,5 +99,15 @@ public class JobApplicationService {
             }
             return criteriaBuilder.equal(root.get("location"), location);
         };
+    }
+
+    public void saveJobApplication(JobApplicationBindingModel bindingModel, Account account) {
+        Company company = companyService.findById(bindingModel.getCompany());
+        Location location = locationService.getById(bindingModel.getLocation());
+        List<Skill> requiredSkills = bindingModel.getRequiredSkills().stream().map(skillService::getById).toList();
+        List<Experience> requiredExperiences = bindingModel.getRequiredExperiences().stream().map(experienceService::getById).toList();
+
+        repository.save(new JobApplication(bindingModel, company, account,
+                location, requiredSkills, requiredExperiences));
     }
 }

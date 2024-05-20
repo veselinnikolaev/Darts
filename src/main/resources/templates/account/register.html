@@ -2,7 +2,26 @@
 <html lang="zxx" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Register</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Darts</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/price_rangs.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <th:block th:replace="~{/compnent/preloader}"></th:block>
@@ -12,11 +31,13 @@
     <th:block th:replace="~{/compnent/navbar}"></th:block>
     <!-- Header End -->
 </header>
-<h2>Registration Form</h2>
+
+<h2>Register a new account</h2>
+<h3>or if you already have an account, <a th:href="@{/account/login}">login</a></h3>
 
 <form th:action="@{/account/register}" th:method="POST" th:object="${account}">
     <div class="form-group">
-        <label for="firstName" class="font-weight-bold text-light">First name*</label>
+        <label for="firstName" class="font-weight-bold form-text">First name*</label>
         <input type="text" class="form-control" id="firstName" placeholder="First name..." name="firstName"
                th:errorclass="bg-danger" th:value="*{firstName}">
 
@@ -30,7 +51,7 @@
 
     </div>
     <div class="form-group">
-        <label for="lastName" class="font-weight-bold text-light">Last name*</label>
+        <label for="lastName" class="font-weight-bold form-text">Last name*</label>
         <input type="text" class="form-control" id="lastName" placeholder="Last name..." name="lastName"
                th:errorclass="bg-danger" th:value="*{lastName}">
 
@@ -44,7 +65,7 @@
 
     </div>
     <div class="form-group">
-        <label for="email" class="font-weight-bold text-light">Email*</label>
+        <label for="email" class="font-weight-bold form-text">Email*</label>
         <input type="email" class="form-control" id="email" placeholder="Email..." name="email"
                th:errorclass="bg-danger" th:value="*{email}">
         <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
@@ -56,7 +77,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="password" class="font-weight-bold text-light">Password*</label>
+        <label for="password" class="font-weight-bold form-text">Password*</label>
         <input type="password" class="form-control" id="password" placeholder="Password..." name="password"
                th:errorclass="bg-danger" th:value="*{password}">
 
@@ -69,7 +90,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="confirmPassword" class="font-weight-bold text-light">Confirm Password*</label>
+        <label for="confirmPassword" class="font-weight-bold form-text">Confirm Password*</label>
         <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password..."
                name="confirmPassword" th:errorclass="bg-danger">
         <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
@@ -81,7 +102,15 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="phone" class="font-weight-bold text-light">Phone number</label>
+        <label for="confirmPassword" class="font-weight-bold form-text">Location*</label>
+        <select class="form-control" id="location" name="location" th:field="*{location}">
+            <option th:each="location : ${locations}" th:value="${location.id}"
+                    th:text="${location.city + ', ' + location.region}"></option>
+        </select>
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
+    </div>
+    <div class="form-group">
+        <label for="phone" class="font-weight-bold form-text">Phone number</label>
         <input type="text" class="form-control" id="phone" placeholder="Phone..." name="phone"
                th:errorclass="bg-danger" th:value="*{phone}">
         <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
@@ -93,7 +122,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="about" class="font-weight-bold text-light">About</label>
+        <label for="about" class="font-weight-bold form-text">About</label>
         <input type="text" class="form-control" id="about" placeholder="About..." name="about"
                th:errorclass="bg-danger" th:value="*{about}">
         <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
@@ -104,9 +133,14 @@
             </button>
         </div>
     </div>
+    <div class="form-group">
+        <label for="photo">Photo</label>
+        <input type="file" class="form-control" id="photo" name="photo" th:field="*{photo}" placeholder="Enter logo URL">
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}"></div>
+    </div>
     <hr class="hr-2 bg-white">
     <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn btn-dark">Register</button>
+        <button type="submit" class="btn post-btn">Register</button>
     </div>
 </form>
 <footer>
@@ -114,5 +148,38 @@
     <th:block th:replace="~{/compnent/footer}"></th:block>
     <!-- Footer End-->
 </footer>
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+
+<!-- contact js -->
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
