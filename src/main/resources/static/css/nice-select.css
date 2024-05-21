@@ -136,3 +136,9 @@
 
 .no-csspointerevents .nice-select.open .list {
   display: block; }
+
+.scrollable-select {
+  height: 150px; /* Adjust the height as needed */
+  overflow-y: scroll;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}

@@ -28,7 +28,7 @@ public class Company extends BaseEntity{
     private List<Account> accounts;
 
     public Company(Account account){
-        this.name = account.getFirstName() + " " + account.getLastName();
+        this.name = STR."\{account.getFirstName()} \{account.getLastName()}";
         this.description = account.getAbout();
         this.email = account.getEmail();
         this.logo = account.getPhoto();

@@ -13,11 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyService {
     private final CompanyRepository repository;
-    public Company findById(Long company) {
+    public Company getById(Long company) {
         return repository.findById(company).orElseThrow(() -> new RuntimeException("Company not found"));
     }
 
-    public void postCompany(CompanyBindingModel bindingModel, List<Location> locations) {
+    public void save(CompanyBindingModel bindingModel, List<Location> locations) {
         repository.save(new Company(bindingModel, locations));
     }
 }

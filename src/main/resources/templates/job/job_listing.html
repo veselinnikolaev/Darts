@@ -27,11 +27,11 @@
 
 <body>
 <!-- Preloader Start -->
-<th:block th:replace="~{/compnent/preloader}"></th:block>
+<th:block th:replace="~{/fragment/preloader}"></th:block>
 <!-- Preloader Start -->
 <header>
     <!-- Header Start -->
-    <th:block th:replace="~{/compnent/navbar}"></th:block>
+    <th:block th:replace="~{/fragment/navbar}"></th:block>
     <!-- Header End -->
 </header>
 <main>
@@ -268,7 +268,7 @@
                                 <div class="items-link items-link2 f-right">
                                     <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:text="${job.jobNature.label}">Full
                                         Time</a>
-                                    <span th:text="${service.calculateTimeAgo(job.posted)}">7 hours ago</span>
+                                    <span th:text="${jobApplicationService.calculateTimeAgo(job.posted)}">7 hours ago</span>
                                 </div>
                             </div>
                         </div>
@@ -313,7 +313,7 @@
 </main>
 <footer>
     <!-- Footer Start-->
-    <th:block th:replace="~{/compnent/footer}"></th:block>
+    <th:block th:replace="~{/fragment/footer}"></th:block>
     <!-- Footer End-->
 </footer>
 

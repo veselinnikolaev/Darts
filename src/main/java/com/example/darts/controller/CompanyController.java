@@ -2,10 +2,8 @@ package com.example.darts.controller;
 
 import com.example.darts.model.binding.CompanyBindingModel;
 import com.example.darts.model.entity.Location;
-import com.example.darts.service.CompanyService;
-import com.example.darts.service.LocationService;
+import com.example.darts.service.*;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,25 +15,24 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/companies")
-public class CompanyController {
-    private final CompanyService service;
-    private final LocationService locationService;
+public class CompanyController extends BaseController {
+    public CompanyController(AccountService accountService, LocationService locationService, CompanyService companyService, ExperienceService experienceService, SkillService skillService, JobApplicationService jobApplicationService) {
+        super(accountService, locationService, companyService, experienceService, skillService, jobApplicationService);
+    }
 
     @GetMapping("/post")
-    public ModelAndView postCompany(@ModelAttribute(name = "company") CompanyBindingModel bindingModel){
-        return new ModelAndView("/company/company_post").addObject("locations", locationService.getAll());
+    public ModelAndView postCompany(@ModelAttribute(name = "company") CompanyBindingModel bindingModel) {
+        return getWithLocations("/company/company_post");
     }
 
     @PostMapping("/post")
-    public ModelAndView postCompanyConfirm(@ModelAttribute(name = "company") @Valid CompanyBindingModel bindingModel, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return new ModelAndView("/company/company_post").addObject("locations", locationService.getAll());
+    public ModelAndView postCompanyConfirm(@ModelAttribute(name = "company") @Valid CompanyBindingModel bindingModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return getWithLocations("/company/company_post");
         }
         List<Location> locations = bindingModel.getLocations().stream().map(locationService::getById).toList();
-
-        service.postCompany(bindingModel, locations);
+        companyService.save(bindingModel, locations);
         return new ModelAndView("redirect:/");
     }
 }

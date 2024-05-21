@@ -6,7 +6,6 @@ import com.example.darts.model.entity.JobApplication;
 import com.example.darts.model.enumeration.Category;
 import com.example.darts.service.*;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,62 +17,52 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/jobs")
-public class JobApplicationController {
-    private final JobApplicationService service;
-    private final LocationService locationService;
-    private final AccountService accountService;
-    private final ExperienceService experienceService;
-    private final SkillService skillService;
+public class JobApplicationController extends BaseController{
+    public JobApplicationController(AccountService accountService, LocationService locationService, CompanyService companyService, ExperienceService experienceService, SkillService skillService, JobApplicationService jobApplicationService) {
+        super(accountService, locationService, companyService, experienceService, skillService, jobApplicationService);
+    }
 
     @GetMapping("/all")
     public ModelAndView jobs(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<JobApplication> jobsPage = service.getAllJobApplications(pageable);
-        return new ModelAndView("/job/job_listing")
+        Page<JobApplication> jobsPage = jobApplicationService.getAll(pageable);
+        return getWithLocations("/job/job_listing")
                 .addObject("jobsPage", jobsPage)
-                .addObject("service", service)
-                .addObject("locations", locationService.getAll());
+                .addObject("service", jobApplicationService);
     }
 
     @GetMapping("/details/{id}")
     public ModelAndView jobDetails(@PathVariable Long id) {
-        JobApplication job = service.getJobApplicationById(id);
-        return new ModelAndView("/job/job_details").addObject("job", job);
+        JobApplication job = jobApplicationService.getById(id);
+        return new ModelAndView("/job/job_details")
+                .addObject("job", job);
     }
 
     @GetMapping("/all/{category}")
     public ModelAndView jobDetails(@PathVariable String category, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<JobApplication> jobsPage = service.getJobApplicationsByCategory(Category.valueOf(category.toUpperCase()), pageable);
-        return new ModelAndView("/job/job_listing")
+        Page<JobApplication> jobsPage = jobApplicationService.getAllByCategory(Category.valueOf(category.toUpperCase()), pageable);
+        return getWithLocations("/job/job_listing")
                 .addObject("jobsPage", jobsPage)
-                .addObject("service", service)
-                .addObject("locations", locationService.getAll());
+                .addObject("jobApplicationService", jobApplicationService);
     }
     @GetMapping("/post")
     public ModelAndView postJob(@ModelAttribute(name = "jobApplication") JobApplicationBindingModel bindingModel, Principal principal) {
-        Account account = accountService.findByEmail(principal.getName());
+        Account account = accountService.getByEmail(principal.getName());
 
-        return new ModelAndView("/job/job_post")
-                .addObject("locations", locationService.getAll())
-                .addObject("companies", account.getCompanies())
-                .addObject("experiences", experienceService.getAll())
-                .addObject("skills", skillService.getAll());
+        return getWithLocationsExperiencesAndSkills("/job/job_post")
+                .addObject("companies", account.getCompanies());
     }
 
     @PostMapping("/post")
     public ModelAndView postJobConfirm(@ModelAttribute(name = "jobApplication") @Valid JobApplicationBindingModel bindingModel, BindingResult bindingResult, Principal principal) {
-        Account account = accountService.findByEmail(principal.getName());
+        Account account = accountService.getByEmail(principal.getName());
         if(bindingResult.hasErrors()) {
-            return new ModelAndView("/job/job_post")
-                    .addObject("locations", locationService.getAll())
-                    .addObject("companies", account.getCompanies())
-                    .addObject("experiences", experienceService.getAll())
-                    .addObject("skills", skillService.getAll());
+            return getWithLocationsExperiencesAndSkills("/job/job_post")
+                    .addObject("companies", account.getCompanies());
         }
-        service.saveJobApplication(bindingModel, account);
+        jobApplicationService.save(bindingModel, account);
         return new ModelAndView("redirect:/jobs/all");
     }
 }

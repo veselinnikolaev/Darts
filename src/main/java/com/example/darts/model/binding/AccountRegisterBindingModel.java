@@ -32,5 +32,5 @@ public class AccountRegisterBindingModel {
     @NotBlank
     private String phone;
     private String about;
-    private MultipartFile photo;
+    private String photo;
 }

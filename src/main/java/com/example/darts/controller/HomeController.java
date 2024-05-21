@@ -1,13 +1,7 @@
 package com.example.darts.controller;
 
-import com.example.darts.model.entity.Account;
 import com.example.darts.model.entity.JobApplication;
-import com.example.darts.model.enumeration.Category;
-import com.example.darts.repository.LocationRepository;
-import com.example.darts.service.AccountService;
-import com.example.darts.service.JobApplicationService;
-import com.example.darts.service.LocationService;
-import lombok.RequiredArgsConstructor;
+import com.example.darts.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,33 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Controller
-@RequiredArgsConstructor
-public class HomeController {
-    private final JobApplicationService jobApplicationService;
-    private final LocationService locationService;
-    private final AccountService accountService;
+public class HomeController extends BaseController{
+    public HomeController(AccountService accountService, LocationService locationService, CompanyService companyService, ExperienceService experienceService, SkillService skillService, JobApplicationService jobApplicationService) {
+        super(accountService, locationService, companyService, experienceService, skillService, jobApplicationService);
+    }
+
     @GetMapping("/")
-    public ModelAndView index(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
-        ModelAndView mv = new ModelAndView("/common/index");
-        Pageable pageable = PageRequest.of(page, size);
-        Map<Category, Long> categoryCounts = new HashMap<>();
-        for (Category category : Category.values()) {
-            List<JobApplication> jobApplications = jobApplicationService
-                    .getJobApplicationsByCategory(category, pageable).getContent();
-            long count = jobApplications.size();
-            categoryCounts.put(category, count);
-        }
-        mv.addObject("categoryCounts", categoryCounts);
-        mv.addObject("service", jobApplicationService);
-        mv.addObject("locations", locationService.getAll());
-        mv.addObject("newestJobs", jobApplicationService.getTop5JobApplicationsByDatePosted());
-        return mv;
+    public ModelAndView index() {
+        ModelAndView mv = getWithLocations("/common/index");
+        return mv.addObject("jobApplicationService", jobApplicationService)
+                .addObject("newestJobs", jobApplicationService.getTop5JobApplicationsByDatePosted());
     }
 
     @PostMapping("/")
@@ -51,21 +29,16 @@ public class HomeController {
                                String location,
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "5") int size) {
-        System.out.println(keyword + location);
         Pageable pageable = PageRequest.of(page, size);
-        Page<JobApplication> jobsPage = jobApplicationService.getAllJobApplications(keyword, location, pageable);
-        return new ModelAndView("redirect:/job/job_listing")
+        Page<JobApplication> jobsPage = jobApplicationService.getAll(keyword, location, pageable);
+        return getWithLocations("/job/job_listing")
                 .addObject("jobsPage", jobsPage)
-                .addObject("service", jobApplicationService)
-                .addObject("locations", locationService.getAll());
+                .addObject("jobApplicationService", jobApplicationService);
     }
 
     @GetMapping("/about")
-    public ModelAndView about(Principal principal) {
-        Account account = accountService.findByEmail(principal.getName());
-
-        return new ModelAndView("/common/about")
-                .addObject("user", account);
+    public ModelAndView about() {
+        return new ModelAndView("/common/about");
     }
 
     @GetMapping("/contact")

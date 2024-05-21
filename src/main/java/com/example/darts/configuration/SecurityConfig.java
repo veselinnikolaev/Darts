@@ -31,7 +31,7 @@ public class SecurityConfig {
                         // The names of the input fields (in our case in auth-login.html)
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/", true)
                         .failureUrl("/account/login/error")
         ).logout(
                 logout -> logout

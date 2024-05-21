@@ -24,11 +24,11 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<th:block th:replace="~{/compnent/preloader}"></th:block>
+<th:block th:replace="~{/fragment/preloader}"></th:block>
 <!-- Preloader Start -->
 <header>
     <!-- Header Start -->
-    <th:block th:replace="~{/compnent/navbar}"></th:block>
+    <th:block th:replace="~{/fragment/navbar}"></th:block>
     <!-- Header End -->
 </header>
 
@@ -67,7 +67,7 @@
         </div>
         <div class="form-group">
             <label for="jobNature">Job Nature</label>
-            <select class="form-control" id="jobNature" name="jobNature" th:field="*{jobNature}">
+            <select class="form-control scrollable-select" id="jobNature" name="jobNature" th:field="*{jobNature}">
                 <option th:each="nature : ${T(com.example.darts.model.enumeration.JobNature).values()}" th:value="${nature.name()}" th:text="${nature.label}"></option>
             </select>
             <div class="alert alert-warning" th:if="${#fields.hasErrors('jobNature')}" th:errors="*{jobNature}"></div>
@@ -79,14 +79,14 @@
         </div>
         <div class="form-group">
             <label for="requiredSkills">Required Skills</label>
-            <select multiple class="form-control" id="requiredSkills" name="requiredSkills" th:field="*{requiredSkills}">
+            <select multiple class="form-control scrollable-select" id="requiredSkills" name="requiredSkills" th:field="*{requiredSkills}">
                 <option th:each="skill : ${skills}" th:value="${skill.id}" th:text="${skill.name}"></option>
             </select>
             <div class="alert alert-warning" th:if="${#fields.hasErrors('requiredSkills')}" th:errors="*{requiredSkills}"></div>
         </div>
         <div class="form-group">
             <label for="requiredExperiences">Required Experiences</label>
-            <select multiple class="form-control" id="requiredExperiences" name="requiredExperiences" th:field="*{requiredExperiences}">
+            <select multiple class="form-control scrollable-select" id="requiredExperiences" name="requiredExperiences" th:field="*{requiredExperiences}">
                 <option th:each="experience : ${experiences}" th:value="${experience.id}" th:text="${experience.name}"></option>
             </select>
             <div class="alert alert-warning" th:if="${#fields.hasErrors('requiredExperiences')}" th:errors="*{requiredExperiences}"></div>
@@ -98,7 +98,7 @@
         </div>
         <div class="form-group">
             <label for="category">Category</label>
-            <select class="form-control" id="category" name="category" th:field="*{category}">
+            <select class="form-control scrollable-select" id="category" name="category" th:field="*{category}">
                 <option th:each="category : ${T(com.example.darts.model.enumeration.Category).values()}" th:value="${category.name()}" th:text="${category.label}"></option>
             </select>
             <div class="alert alert-warning" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
@@ -109,7 +109,7 @@
 
 <footer>
     <!-- Footer Start-->
-    <th:block th:replace="~{/compnent/footer}"></th:block>
+    <th:block th:replace="~{/fragment/footer}"></th:block>
     <!-- Footer End-->
 </footer>
 

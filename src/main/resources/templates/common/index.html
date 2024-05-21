@@ -27,11 +27,11 @@
 
 <body>
 <!-- Preloader Start -->
-<th:block th:replace="~{/compnent/preloader}"></th:block>
+<th:block th:replace="~{/fragment/preloader}"></th:block>
 <!-- Preloader Start -->
 <header>
     <!-- Header Start -->
-    <th:block th:replace="~{/compnent/navbar}"></th:block>
+    <th:block th:replace="~{/fragment/navbar}"></th:block>
     <!-- Header End -->
 </header>
 <main>
@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-xl-8">
                             <!-- form -->
-                            <form th:action="@{/static}" th:method="POST" class="search-box">
+                            <form th:action="@{/}" th:method="POST" class="search-box">
                                 <div class="input-form">
                                     <input name="keyword" type="text" placeholder="Job Tittle or keyword">
                                 </div>
@@ -97,7 +97,7 @@
                         </div>
                         <div class="services-cap">
                             <h5><a th:href="@{/jobs/all/{category}(category=${jobApplicationCategory.name().toLowerCase()})}" th:method="GET" th:text="${jobApplicationCategory.label}"></a></h5>
-                            <span th:text="${categoryCounts[__${jobApplicationCategory}__]}">(653)</span>
+                            <span th:text="${jobApplicationService.getAllByCategory(jobApplicationCategory).size()}">(653)</span>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="browse-btn2 text-center mt-50">
-                        <a th:href="@{/jobs/{page}(page=1)}" th:method="GET" class="border-btn2">Browse All Sectors</a>
+                        <a th:href="@{/jobs/all}" th:method="GET" class="border-btn2">Browse All Sectors</a>
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="items-link f-right">
                             <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET" th:text="${job.jobNature.label}">Full Time</a>
-                            <span th:text="${service.calculateTimeAgo(job.posted)}">7 hours ago</span>
+                            <span th:text="${jobApplicationService.calculateTimeAgo(job.posted)}">7 hours ago</span>
                         </div>
                     </div>
                 </div>
@@ -389,7 +389,7 @@
 </main>
 <footer>
     <!-- Footer Start-->
-    <th:block th:replace="~{/compnent/footer}"></th:block>
+    <th:block th:replace="~{/fragment/footer}"></th:block>
     <!-- Footer End-->
 </footer>
 

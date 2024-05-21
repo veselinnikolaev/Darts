@@ -24,11 +24,11 @@ public class JobApplicationService {
     private final SkillService skillService;
     private final ExperienceService experienceService;
 
-    public Page<JobApplication> getAllJobApplications(Pageable pageable) {
+    public Page<JobApplication> getAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
-    public Page<JobApplication> getAllJobApplications(String keyword, String location, Pageable pageable) {
+    public Page<JobApplication> getAll(String keyword, String location, Pageable pageable) {
         if ((keyword.isEmpty() || keyword.isBlank()) && location.equals("all")) {
             return repository.findAll(pageable);
         }
@@ -43,13 +43,17 @@ public class JobApplicationService {
         return repository.findAll(spec, pageable);
     }
 
-    public JobApplication getJobApplicationById(Long id) {
+    public JobApplication getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job application not found"));
     }
 
-    public Page<JobApplication> getJobApplicationsByCategory(Category category, Pageable pageable) {
+    public Page<JobApplication> getAllByCategory(Category category, Pageable pageable) {
         return repository.findAllByCategory(category, pageable);
+    }
+
+    public List<JobApplication> getAllByCategory(Category category) {
+        return repository.findAllByCategory(category);
     }
 
     public List<JobApplication> getTop5JobApplicationsByDatePosted() {
@@ -62,17 +66,17 @@ public class JobApplicationService {
 
         long daysBetween = ChronoUnit.DAYS.between(postedDateTime, now);
         if (daysBetween > 0) {
-            return daysBetween + " days ago";
+            return STR."\{daysBetween} days ago";
         }
 
         long hoursBetween = ChronoUnit.HOURS.between(postedDateTime, now);
         if (hoursBetween > 0) {
-            return hoursBetween + " hours ago";
+            return STR."\{hoursBetween} hours ago";
         }
 
         long minutesBetween = ChronoUnit.MINUTES.between(postedDateTime, now);
         if (minutesBetween > 0) {
-            return minutesBetween + " minutes ago";
+            return STR."\{minutesBetween} minutes ago";
         }
 
         return "just now";
@@ -80,7 +84,7 @@ public class JobApplicationService {
 
     private Specification<JobApplication> hasKeyword(String keyword) {
         return (root, query, criteriaBuilder) -> {
-            String likePattern = "%" + keyword.toLowerCase() + "%";
+            String likePattern = STR."%\{keyword.toLowerCase()}%";
             return criteriaBuilder.or(
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("position")), likePattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), likePattern),
@@ -101,8 +105,8 @@ public class JobApplicationService {
         };
     }
 
-    public void saveJobApplication(JobApplicationBindingModel bindingModel, Account account) {
-        Company company = companyService.findById(bindingModel.getCompany());
+    public void save(JobApplicationBindingModel bindingModel, Account account) {
+        Company company = companyService.getById(bindingModel.getCompany());
         Location location = locationService.getById(bindingModel.getLocation());
         List<Skill> requiredSkills = bindingModel.getRequiredSkills().stream().map(skillService::getById).toList();
         List<Experience> requiredExperiences = bindingModel.getRequiredExperiences().stream().map(experienceService::getById).toList();

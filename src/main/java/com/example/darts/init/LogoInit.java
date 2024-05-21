@@ -24,7 +24,7 @@ public class LogoInit implements CommandLineRunner {
         BufferedImage bufferedImage = ImageIO.read(new File(LOGO_PATH));
 
         // Resize the image
-        BufferedImage resizedImage = resizeImage(bufferedImage, 300, 56);
+        BufferedImage resizedImage = resizeImage(bufferedImage, 150, 75);
 
         // Save the resized image
         saveResizedImage(resizedImage, OUTPUT_LOGO_PATH);

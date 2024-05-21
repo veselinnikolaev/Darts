@@ -20,4 +20,6 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     Page<JobApplication> findAllByCategory(Category category, Pageable pageable);
     Page<JobApplication> findAll(Specification<JobApplication> spec, Pageable pageable);
     List<JobApplication> findTop5ByOrderByPostedDesc();
+
+    List<JobApplication> findAllByCategory(Category category);
 }

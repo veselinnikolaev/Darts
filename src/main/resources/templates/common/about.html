@@ -27,11 +27,11 @@
 
    <body>
     <!-- Preloader Start -->
-    <th:block th:replace="~{/compnent/preloader}"></th:block>
+    <th:block th:replace="~{/fragment/preloader}"></th:block>
     <!-- Preloader Start -->
     <header>
         <!-- Header Start -->
-        <th:block th:replace="~{/compnent/navbar}"></th:block>
+        <th:block th:replace="~{/fragment/navbar}"></th:block>
         <!-- Header End -->
     </header>
     <main>
@@ -204,7 +204,7 @@
                     <div class="col-xl-10">
                         <div sec:authorize="isAuthenticated()" class="cv-caption text-center">
                             <p class="pera2"> Make a Difference with Your Online Resume!</p>
-                            <a  th:href="@{/account/{id}(id=${user.id})}" class="border-btn2 border-btn4">Upload your cv</a>
+                            <a  th:href="@{/account/profile}" class="border-btn2 border-btn4">Upload your cv</a>
                         </div>
                         <div sec:authorize="isAnonymous()" class="cv-caption text-center">
                             <p class="pera2"> Make a Difference! Start now!</p>
@@ -275,7 +275,7 @@
     </main>
     <footer>
         <!-- Footer Start-->
-        <th:block th:replace="~{/compnent/footer}"></th:block>
+        <th:block th:replace="~{/fragment/footer}"></th:block>
         <!-- Footer End-->
     </footer>
 

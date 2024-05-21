@@ -48,5 +48,6 @@ public class Account extends BaseEntity {
         this.location = location;
         this.phone = bindingModel.getPhone();
         this.about = bindingModel.getAbout();
+        this.photo = bindingModel.getPhoto();
     }
 }
