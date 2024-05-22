@@ -32,6 +32,6 @@ public class DartsAccountDetailsService implements UserDetailsService {
         return repository
                 .findByEmail(email)
                 .map(DartsAccountDetailsService::map)
-                .orElseThrow(() -> new UsernameNotFoundException(STR."User \{email} not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("User %s not found!".formatted(email)));
     }
 }

@@ -21,8 +21,10 @@ public class Skill extends BaseEntity{
     private List<Account> accounts;
     @ManyToMany
     private List<JobApplication> jobApplications;
+    private String photoUrl;
 
     public Skill(SkillJSON jSON) {
         this.name = jSON.getName();
+        this.photoUrl = jSON.getPhotoUrl();
     }
 }

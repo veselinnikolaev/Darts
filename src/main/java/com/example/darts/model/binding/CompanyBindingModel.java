@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,5 +22,6 @@ public class CompanyBindingModel {
     @NotBlank
     private String email;
     private MultipartFile logo;
-    private List<Long> locations;
+    @NotNull
+    private List<Location> locations;
 }

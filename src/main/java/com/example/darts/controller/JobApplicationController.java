@@ -27,7 +27,7 @@ public class JobApplicationController extends BaseController{
     public ModelAndView jobs(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<JobApplication> jobsPage = jobApplicationService.getAll(pageable);
-        return getWithLocations("/job/job_listing")
+        return getWithLocations("/job/listing")
                 .addObject("jobsPage", jobsPage)
                 .addObject("service", jobApplicationService);
     }
@@ -35,7 +35,7 @@ public class JobApplicationController extends BaseController{
     @GetMapping("/details/{id}")
     public ModelAndView jobDetails(@PathVariable Long id) {
         JobApplication job = jobApplicationService.getById(id);
-        return new ModelAndView("/job/job_details")
+        return new ModelAndView("job/details")
                 .addObject("job", job);
     }
 
@@ -43,7 +43,7 @@ public class JobApplicationController extends BaseController{
     public ModelAndView jobDetails(@PathVariable String category, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<JobApplication> jobsPage = jobApplicationService.getAllByCategory(Category.valueOf(category.toUpperCase()), pageable);
-        return getWithLocations("/job/job_listing")
+        return getWithLocations("/job/listing")
                 .addObject("jobsPage", jobsPage)
                 .addObject("jobApplicationService", jobApplicationService);
     }
@@ -51,7 +51,7 @@ public class JobApplicationController extends BaseController{
     public ModelAndView postJob(@ModelAttribute(name = "jobApplication") JobApplicationBindingModel bindingModel, Principal principal) {
         Account account = accountService.getByEmail(principal.getName());
 
-        return getWithLocationsExperiencesAndSkills("/job/job_post")
+        return getWithLocationsExperiencesAndSkills("/job/post")
                 .addObject("companies", account.getCompanies());
     }
 
@@ -59,7 +59,7 @@ public class JobApplicationController extends BaseController{
     public ModelAndView postJobConfirm(@ModelAttribute(name = "jobApplication") @Valid JobApplicationBindingModel bindingModel, BindingResult bindingResult, Principal principal) {
         Account account = accountService.getByEmail(principal.getName());
         if(bindingResult.hasErrors()) {
-            return getWithLocationsExperiencesAndSkills("/job/job_post")
+            return getWithLocationsExperiencesAndSkills("/job/post")
                     .addObject("companies", account.getCompanies());
         }
         jobApplicationService.save(bindingModel, account);

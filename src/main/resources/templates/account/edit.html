@@ -35,7 +35,8 @@
     <div class="row align-items-center justify-content-center h-100">
         <div class="col-lg-4">
             <div class="container m-4">
-                <form th:action="@{/account/register}" th:method="POST" th:object="${account}">
+                <form th:action="@{/account/register}" th:method="POST" th:object="${account}"
+                      enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="firstName" class="font-weight-bold form-text">First name</label>
                         <input type="text" class="form-control" id="firstName" placeholder="First name..."
@@ -76,45 +77,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="password" class="font-weight-bold form-text">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password..."
-                               name="password"
-                               th:errorclass="bg-danger" th:value="*{password}">
-
-                        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
-                             th:if="${#fields.hasErrors('password')}">
-                            <small class="text-danger" th:errors="*{password}"></small>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword" class="font-weight-bold form-text">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirmPassword"
-                               placeholder="Confirm Password..."
-                               name="confirmPassword" th:errorclass="bg-danger">
-                        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
-                             th:if="${#fields.hasErrors('confirmPassword')}">
-                            <small class="text-danger" th:errors="*{confirmPassword}"></small>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="location" class="font-weight-bold form-text">Location</label>
                         <select class="form-control" id="location" name="location">
-                            <option selected="selected" disabled>Select location</option>
+                            <option selected="selected" th:value="${account.location.id}"
+                                    th:text="${account.location.city + ', ' + account.location.region}">Select location</option>
                             <option th:each="location : ${allLocations}" th:value="${location.id}"
                                     th:text="${location.city + ', ' + location.region}"></option>
                         </select>
-                        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert" th:if="${#fields.hasErrors('location')}">
-                            <small class="text-danger" th:errors="*{location}"></small>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="phone" class="font-weight-bold form-text">Phone number</label>
@@ -128,9 +97,47 @@
                             </button>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="about" class="font-weight-bold form-text">About</label>
+                        <input type="text" class="form-control" id="about" placeholder="About..." name="about"
+                               th:errorclass="bg-danger" th:value="*{about}">
+                        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+                             th:if="${#fields.hasErrors('about')}">
+                            <small class="text-danger" th:errors="*{about}"></small>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo" class="font-weight-bold form-text">Photo</label>
+                        <input type="file" class="form-control-file" id="photo" placeholder="Upload photo" name="photo"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="cv" class="font-weight-bold form-text">CV</label>
+                        <input type="file" class="form-control-file" id="cv" placeholder="Upload CV" name="cv"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Skills</label>
+                        <select multiple class="form-control scrollable-select" id="skills"
+                                name="skills">
+                            <option selected="selected" disabled>Add Skills</option>
+                            <option th:each="skill : ${allSkills}" th:value="${skill.id}" th:text="${skill.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="experiences">Experiences</label>
+                        <select multiple class="form-control scrollable-select" id="experiences"
+                                name="experiences">
+                            <option selected="selected" disabled>Add Experiences</option>
+                            <option th:each="experience : ${allExperiences}" th:value="${experience.id}" th:text="${experience.name}"></option>
+                        </select>
+                    </div>
                     <hr class="hr-2 bg-white">
                     <div class="button-holder d-flex justify-content-center">
-                        <button type="submit" class="btn post-btn">Register</button>
+                        <button type="submit" class="btn post-btn">Edit</button>
                     </div>
                 </form>
             </div>

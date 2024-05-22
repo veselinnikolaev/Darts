@@ -23,16 +23,15 @@ public class CompanyController extends BaseController {
 
     @GetMapping("/post")
     public ModelAndView postCompany(@ModelAttribute(name = "company") CompanyBindingModel bindingModel) {
-        return getWithLocations("/company/company_post");
+        return getWithLocations("/company/post");
     }
 
     @PostMapping("/post")
     public ModelAndView postCompanyConfirm(@ModelAttribute(name = "company") @Valid CompanyBindingModel bindingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return getWithLocations("/company/company_post");
+            return getWithLocations("/company/post");
         }
-        List<Location> locations = bindingModel.getLocations().stream().map(locationService::getById).toList();
-        companyService.save(bindingModel, locations);
+        companyService.save(bindingModel);
         return new ModelAndView("redirect:/");
     }
 }

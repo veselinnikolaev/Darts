@@ -1,0 +1,219 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Darts</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/price_rangs.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<th:block th:replace="~{/fragment/preloader}"></th:block>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <th:block th:replace="~{/fragment/navbar}"></th:block>
+    <!-- Header End -->
+</header>
+
+<main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about-mf sect-pt4 route">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box-shadow-full">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-5">
+                                        <div class="about-img">
+                                            <img th:src="${account.photo}" class="img-fluid rounded b-shadow-a" alt="/img/team/account-no-photo.png">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-7">
+                                        <div class="about-info">
+                                            <p><span class="title-s">First name: </span> <span
+                                                    th:text="${account.firstName}"></span></p>
+                                            <p><span class="title-s">Last name: </span> <span
+                                                    th:text="${account.lastName}"></span></p>
+                                            <p><span class="title-s">Email: </span> <span
+                                                    th:text="${account.email}"></span></p>
+                                            <p><span class="title-s">Phone: </span> <span
+                                                    th:text="${account.phone}"></span></p>
+                                        </div>
+                                        <form th:action="@{/account/edit}" th:method="POST">
+                                            <button type="submit" class="btn head-btn2">Edit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="skill-mf">
+                                    <p class="title-s">Skills</p>
+                                    <p th:if="${account.skills.isEmpty()}" class="title-s">Looks like you haven't added any skills yet.</p>
+                                    <span th:unless="${account.skills.isEmpty()}" th:each="skill : ${account.skills}" th:text="${skill.name}"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="about-me pt-4 pt-md-0">
+                                    <div class="title-box-2">
+                                        <h5 class="title-left">
+                                            About me
+                                        </h5>
+                                    </div>
+                                    <p class="lead" th:text="${account.about}">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services-mf pt-5 route">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <h3 class="title-a">
+                            Experiences
+                        </h3>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" th:if="${account.experiences.isEmpty()}">
+                    <p>It seems that you don't have any experiences</p>
+                </div>
+                <div class="col-md-4" th:unless="${account.experiences.isEmpty()}" th:each="experience : ${account.experiences.stream().limit(6).toList()}">
+                    <div class="service-box">
+                        <div class="service-ico">
+                            <span class="ico-circle"><i class="bi bi-briefcase"></i></span>
+                        </div>
+                        <div class="service-content">
+                            <h2 class="s-title" th:text="${experience.name}"></h2>
+                            <p class="s-description text-center" th:text="${experience.description}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="work" class="portfolio-mf sect-pt4 route">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <h3 class="title-a">
+                            Portfolio
+                        </h3>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" th:if="${account.projects.isEmpty()}">
+                    <p>It seems that you don't have any projects</p>
+                </div>
+                <div class="col-md-4" th:unless="${account.projects.isEmpty()}" th:each="project : ${account.projects.stream().limit(6).toList()}">
+                    <div class="work-box">
+                        <div class="work-img">
+                            <img th:src="${project.photo}" th:alt="${project.skills.get(0).photoUrl}" class="img-fluid">
+                        </div>
+                        <div class="work-content">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h2 class="w-title" th:text="${project.name}"></h2>
+                                    <div class="w-more">
+                                        <span class="w-ctegory" th:text="${project.category.label}"></span> / <span
+                                            class="w-date" th:text="${#dates.format(project.posted)}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="w-like">
+                                        <a th:href="@{/project/details/{id}(id=${project.id})}"> <span class="bi bi-plus-circle"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Portfolio Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer>
+    <!-- Footer Start-->
+    <th:block th:replace="~{/fragment/footer}"></th:block>
+    <!-- Footer End-->
+</footer>
+
+<!-- JS here -->
+
+<!-- All JS Custom Plugins Link Here here -->
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+
+<!-- contact js -->
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+
+</html>

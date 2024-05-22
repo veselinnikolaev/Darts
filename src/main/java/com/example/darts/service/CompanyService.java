@@ -17,7 +17,7 @@ public class CompanyService {
         return repository.findById(company).orElseThrow(() -> new RuntimeException("Company not found"));
     }
 
-    public void save(CompanyBindingModel bindingModel, List<Location> locations) {
-        repository.save(new Company(bindingModel, locations));
+    public void save(CompanyBindingModel bindingModel) {
+        repository.save(new Company(bindingModel));
     }
 }

@@ -28,7 +28,7 @@ public class Company extends BaseEntity{
     private List<Account> accounts;
 
     public Company(Account account){
-        this.name = STR."\{account.getFirstName()} \{account.getLastName()}";
+        this.name = "%s %s".formatted(account.getFirstName(), account.getLastName());
         this.description = account.getAbout();
         this.email = account.getEmail();
         this.logo = account.getPhoto();
@@ -36,12 +36,12 @@ public class Company extends BaseEntity{
         this.accounts = List.of(account);
     }
 
-    public Company(CompanyBindingModel bindingModel, List<Location> locations){
+    public Company(CompanyBindingModel bindingModel){
         this.name = bindingModel.getName();
         this.description = bindingModel.getDescription();
         this.website = bindingModel.getWebsite();
         this.email = bindingModel.getEmail();
         //this.logo = bindingModel.getLogo();
-        this.locations = locations;
+        this.locations = bindingModel.getLocations();
     }
 }

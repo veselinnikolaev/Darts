@@ -66,17 +66,17 @@ public class JobApplicationService {
 
         long daysBetween = ChronoUnit.DAYS.between(postedDateTime, now);
         if (daysBetween > 0) {
-            return STR."\{daysBetween} days ago";
+            return daysBetween + " days ago";
         }
 
         long hoursBetween = ChronoUnit.HOURS.between(postedDateTime, now);
         if (hoursBetween > 0) {
-            return STR."\{hoursBetween} hours ago";
+            return hoursBetween + " hours ago";
         }
 
         long minutesBetween = ChronoUnit.MINUTES.between(postedDateTime, now);
         if (minutesBetween > 0) {
-            return STR."\{minutesBetween} minutes ago";
+            return minutesBetween + " minutes ago";
         }
 
         return "just now";
@@ -84,7 +84,7 @@ public class JobApplicationService {
 
     private Specification<JobApplication> hasKeyword(String keyword) {
         return (root, query, criteriaBuilder) -> {
-            String likePattern = STR."%\{keyword.toLowerCase()}%";
+            String likePattern = "%" + keyword.toLowerCase() + "%";
             return criteriaBuilder.or(
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("position")), likePattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), likePattern),
@@ -106,12 +106,6 @@ public class JobApplicationService {
     }
 
     public void save(JobApplicationBindingModel bindingModel, Account account) {
-        Company company = companyService.getById(bindingModel.getCompany());
-        Location location = locationService.getById(bindingModel.getLocation());
-        List<Skill> requiredSkills = bindingModel.getRequiredSkills().stream().map(skillService::getById).toList();
-        List<Experience> requiredExperiences = bindingModel.getRequiredExperiences().stream().map(experienceService::getById).toList();
-
-        repository.save(new JobApplication(bindingModel, company, account,
-                location, requiredSkills, requiredExperiences));
+        repository.save(new JobApplication(bindingModel, account));
     }
 }

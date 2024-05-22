@@ -32,35 +32,38 @@
     <!-- Header End -->
 </header>
 
-<h2>Log into your account</h2>
-<h3>or if you don't have an account yet, <a th:href="@{/account/register}">register</a></h3>
+<div class="container-fluid h-100">
+    <div class="row align-items-center justify-content-center h-100">
+        <div class="col-lg-4">
+            <div class="container m-4">
+                <form th:action="@{/account/login}" th:method="POST">
+                    <div class="form-group">
+                        <label for="email" class="font-weight-bold form-text">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email..." autofocus="autofocus"
+                               name="email" th:value="${email}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="font-weight-bold form-text">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password..."
+                               name="password">
+                    </div>
 
-<form th:action="@{/account/login}" th:method="POST">
-    <div class="form-group">
-        <label for="email" class="font-weight-bold form-text">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Email..."  autofocus="autofocus" name="email" th:value="${email}">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert"
+                         th:if="${bad_credentials}">
+                        <small class="text-danger" th:text="'Invalid login attempt'"></small>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <hr class="hr-2 bg-white">
+                    <div class="button-holder d-flex justify-content-center">
+                        <button type="submit" class="btn post-btn">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password" class="font-weight-bold form-text">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Password..." name="password">
-    </div>
-
-    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${bad_credentials}">
-        <small class="text-danger" th:text="'Invalid login attempt'"></small>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <hr class="hr-2 bg-white">
-    <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn post-btn">Login</button>
-    </div>
-</form>
-<footer>
-    <!-- Footer Start-->
-    <th:block th:replace="~{/fragment/footer}"></th:block>
-    <!-- Footer End-->
-</footer>
+</div>
 <script src="/js/vendor/modernizr-3.5.0.min.js"></script>
 <!-- Jquery, Popper, Bootstrap -->
 <script src="/js/vendor/jquery-1.12.4.min.js"></script>

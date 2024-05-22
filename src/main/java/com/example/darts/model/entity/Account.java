@@ -39,15 +39,15 @@ public class Account extends BaseEntity {
     private List<Company> companies;
     @ManyToMany
     private List<JobApplication> jobApplications;
+    @OneToMany(mappedBy = "account")
+    private List<Project> projects;
 
-    public Account(AccountRegisterBindingModel bindingModel, Location location){
+    public Account(AccountRegisterBindingModel bindingModel){
         this.firstName = bindingModel.getFirstName();
         this.lastName = bindingModel.getLastName();
         this.email = bindingModel.getEmail();
         this.password = bindingModel.getPassword();
-        this.location = location;
+        this.location = bindingModel.getLocation();
         this.phone = bindingModel.getPhone();
-        this.about = bindingModel.getAbout();
-        this.photo = bindingModel.getPhoto();
     }
 }

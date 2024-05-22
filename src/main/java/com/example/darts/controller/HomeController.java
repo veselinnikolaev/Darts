@@ -31,7 +31,7 @@ public class HomeController extends BaseController{
                                @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<JobApplication> jobsPage = jobApplicationService.getAll(keyword, location, pageable);
-        return getWithLocations("/job/job_listing")
+        return getWithLocations("/job/listing")
                 .addObject("jobsPage", jobsPage)
                 .addObject("jobApplicationService", jobApplicationService);
     }

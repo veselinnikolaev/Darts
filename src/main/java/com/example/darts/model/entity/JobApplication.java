@@ -42,19 +42,18 @@ public class JobApplication extends BaseEntity {
     @ManyToMany(mappedBy = "jobApplications")
     private List<Account> applicants;
 
-    public JobApplication(JobApplicationBindingModel bindingModel, Company company, Account account, Location location,
-                          List<Skill> requiredSkills, List<Experience> requiredExperiences) {
+    public JobApplication(JobApplicationBindingModel bindingModel, Account account) {
         this.position = bindingModel.getPosition();
-        this.company = company == null ? new Company(account) : company;
-        this.location = location;
+        this.company = bindingModel.getCompany();
+        this.location = bindingModel.getLocation();
         this.vacancy = bindingModel.getVacancy();
         this.salary = BigDecimal.valueOf(bindingModel.getSalary());
-        this.jobNature = JobNature.valueOf(bindingModel.getJobNature());
+        this.jobNature = bindingModel.getJobNature();
         this.posted = LocalDate.now();
         this.due = LocalDate.parse(bindingModel.getDue());
-        this.requiredSkills = requiredSkills;
-        this.requiredExperiences = requiredExperiences;
+        this.requiredSkills = bindingModel.getRequiredSkills();
+        this.requiredExperiences = bindingModel.getRequiredExperiences();
         this.description = bindingModel.getDescription();
-        this.category = Category.valueOf(bindingModel.getCategory());
+        this.category = bindingModel.getCategory();
     }
 }

@@ -1,9 +1,12 @@
 package com.example.darts.model.binding;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import com.example.darts.model.entity.Company;
+import com.example.darts.model.entity.Experience;
+import com.example.darts.model.entity.Location;
+import com.example.darts.model.entity.Skill;
+import com.example.darts.model.enumeration.Category;
+import com.example.darts.model.enumeration.JobNature;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.List;
@@ -12,17 +15,25 @@ import java.util.List;
 public class JobApplicationBindingModel {
     @NotBlank
     private String position;
-    private Long company;
-    private Long location;
+    @NotNull
+    private Company company;
+    @NotNull
+    private Location location;
     @PositiveOrZero
+    @NotNull
     private Integer vacancy;
+    @NotNull
     @Positive
     private Double salary;
-    private String jobNature;
+    @NotNull
+    private JobNature jobNature;
     @Future
     private String due;
-    private List<Long> requiredSkills;
-    private List<Long> requiredExperiences;
+    @NotNull
+    private List<Skill> requiredSkills;
+    @NotNull
+    private List<Experience> requiredExperiences;
     private String description;
-    private String category;
+    @NotNull
+    private Category category;
 }

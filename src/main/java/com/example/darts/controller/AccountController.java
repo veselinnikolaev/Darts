@@ -1,6 +1,8 @@
 package com.example.darts.controller;
 
+import com.example.darts.model.binding.AccountEditBindingModel;
 import com.example.darts.model.binding.AccountRegisterBindingModel;
+import com.example.darts.model.entity.Account;
 import com.example.darts.model.entity.Location;
 import com.example.darts.service.*;
 import jakarta.validation.Valid;
@@ -31,8 +33,7 @@ public class AccountController extends BaseController {
         if (bindingResult.hasErrors()) {
             return getWithLocations("/account/register");
         }
-        Location location = locationService.getById(accountRegisterBindingModel.getLocation());
-        accountService.register(accountRegisterBindingModel, location);
+        accountService.register(accountRegisterBindingModel);
         return new ModelAndView("redirect:/account/login");
     }
 
@@ -48,7 +49,26 @@ public class AccountController extends BaseController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView profile() {
-        return new ModelAndView("/account/profile");
+    public ModelAndView profile(Principal principal) {
+        return new ModelAndView("/account/profile")
+                .addObject("account", accountService.getByEmail(principal.getName()));
+    }
+
+    @GetMapping("/edit")
+    public ModelAndView edit(@ModelAttribute (name = "account") AccountEditBindingModel bindingModel, Principal principal) {
+        return getWithLocationsExperiencesAndSkills("/account/edit")
+                .addObject("account", accountService.getByEmail(principal.getName()));
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView edit(@ModelAttribute(name = "account") @Valid AccountEditBindingModel bindingModel, BindingResult bindingResult, Principal principal) {
+        if(bindingResult.hasErrors()){
+            return getWithLocationsExperiencesAndSkills("/account/edit")
+                    .addObject("account", accountService.getByEmail(principal.getName()));
+        }
+        Account account = accountService.getByEmail(principal.getName());
+        accountService.edit(account, bindingModel);
+
+        return new ModelAndView("redirect:/account/profile");
     }
 }

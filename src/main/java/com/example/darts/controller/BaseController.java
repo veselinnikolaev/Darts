@@ -14,12 +14,12 @@ public abstract class BaseController {
     protected final JobApplicationService jobApplicationService;
     public ModelAndView getWithLocations(String name){
         return new ModelAndView(name)
-                .addObject("locations", locationService.getAll());
+                .addObject("allLocations", locationService.getAll());
     }
 
     public ModelAndView getWithLocationsExperiencesAndSkills(String name){
         return getWithLocations(name)
-                .addObject("experiences", experienceService.getAll())
-                .addObject("skills",skillService.getAll());
+                .addObject("allExperiences", experienceService.getAll())
+                .addObject("allSkills",skillService.getAll());
     }
 }
