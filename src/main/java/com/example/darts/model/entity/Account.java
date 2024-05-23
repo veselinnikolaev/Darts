@@ -29,16 +29,14 @@ public class Account extends BaseEntity {
     private String phone;
     @Column(columnDefinition = "TEXT")
     private String about;
-    private String CV;
+    private String cv;
     private String photo;
-    @ManyToMany(mappedBy = "accounts")
-    private List<Experience> experiences;
     @ManyToMany(mappedBy = "accounts")
     private List<Skill> skills;
     @ManyToMany(mappedBy = "accounts", fetch = FetchType.EAGER)
     private List<Company> companies;
     @ManyToMany
-    private List<JobApplication> jobApplications;
+    private List<JobApplication> jobApplications; //applied for
     @OneToMany(mappedBy = "account")
     private List<Project> projects;
 

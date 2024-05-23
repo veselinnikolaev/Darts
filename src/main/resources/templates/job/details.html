@@ -1,190 +1,193 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-         <title>Darts</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Darts</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
 
-		<!-- CSS here -->
-            <link rel="stylesheet" href="/css/bootstrap.min.css">
-            <link rel="stylesheet" href="/css/owl.carousel.min.css">
-            <link rel="stylesheet" href="/css/flaticon.css">
-            <link rel="stylesheet" href="/css/slicknav.css">
-            <link rel="stylesheet" href="/css/price_rangs.css">
-            <link rel="stylesheet" href="/css/animate.min.css">
-            <link rel="stylesheet" href="/css/magnific-popup.css">
-            <link rel="stylesheet" href="/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="/css/themify-icons.css">
-            <link rel="stylesheet" href="/css/slick.css">
-            <link rel="stylesheet" href="/css/nice-select.css">
-            <link rel="stylesheet" href="/css/style.css">
-   </head>
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/price_rangs.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
 
-   <body>
-    <!-- Preloader Start -->
-    <th:block th:replace="~{/fragment/preloader}"></th:block>
-    <!-- Preloader Start -->
-    <header>
-        <!-- Header Start -->
-        <th:block th:replace="~{/fragment/navbar}"></th:block>
-        <!-- Header End -->
-    </header>
-    <main>
+<body>
+<!-- Preloader Start -->
+<th:block th:replace="~{/fragment/preloader}"></th:block>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <th:block th:replace="~{/fragment/navbar}"></th:block>
+    <!-- Header End -->
+</header>
+<main>
 
-        <!-- Hero Area Start-->
-        <div class="slider-area ">
-        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="/img/hero/about.jpg">
+    <!-- Hero Area Start-->
+    <div class="slider-area ">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center"
+             data-background="/img/hero/about.jpg">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2 th:text="${job.position}">UI/UX Designer</h2>
+                            <h2 th:text="${job.experienceLevel.label + ' ' + job.position}"></h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        <!-- Hero Area End -->
-        <!-- job post company Start -->
-        <div class="job-post-company pt-120 pb-120">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <!-- Left Content -->
-                    <div class="col-xl-7 col-lg-8">
-                        <!-- job single -->
-                        <div class="single-job-items mb-50">
-                            <div class="job-items">
-                                <div class="company-img company-img-details">
-                                    <img th:src="${job.company.logo}" alt="">
-                                </div>
-                                <div class="job-tittle">
-                                        <h4 th:text="${job.position}">Digital Marketer</h4>
-                                    <ul>
-                                        <li th:text="${job.company.name}">Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt" th:text="${job.location.getCity() + ', ' + job.location.getRegion()}"></i></li>
-                                        <li th:text="${job.salary}">$3500 - $4000</li>
-                                    </ul>
-                                </div>
+    </div>
+    <!-- Hero Area End -->
+    <!-- job post company Start -->
+    <div class="job-post-company pt-120 pb-120">
+        <div class="container">
+            <div class="row justify-content-between">
+                <!-- Left Content -->
+                <div class="col-xl-7 col-lg-8">
+                    <!-- job single -->
+                    <div class="single-job-items mb-50">
+                        <div class="job-items">
+                            <div class="company-img company-img-details img-entity">
+                                <img th:unless="${job.company.logo == null}" th:src="${job.company.logo}" alt="">
+                                <img th:if="${job.company.logo == null}" src="/img/entity/company_alt.png" alt="">
+                            </div>
+                            <div class="job-tittle">
+                                <h4 th:text="${job.experienceLevel.label + ' ' + job.position}"></h4>
+                                <ul>
+                                    <li th:text="${job.company.name}">Creative Agency</li>
+                                    <li><i class="fas fa-map-marker-alt"
+                                           th:text="${job.location.getCity() + ', ' + job.location.getRegion()}"></i>
+                                    </li>
+                                    <li th:text="${job.salary}">$3500 - $4000</li>
+                                </ul>
                             </div>
                         </div>
-                          <!-- job single End -->
-                       
-                        <div class="job-post-details">
-                            <div class="post-details1 mb-50">
-                                <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Job Description</h4>
-                                </div>
-                                <p th:text="${job.description}">It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
-                            </div>
-                            <div class="post-details2  mb-50">
-                                 <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Required Knowledge, Skills, and Abilities</h4>
-                                </div>
-                               <ul>
-                                   <li th:each="skill : ${job.requiredSkills}" th:text="${skill.name}">System Software Development</li>
-                               </ul>
-                            </div>
-                            <div class="post-details2  mb-50">
-                                 <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Education + Experience</h4>
-                                </div>
-                               <ul>
-                                   <li th:each="experience : ${job.requiredExperiences}" th:text="${experience.name}">3 or more years of professional design experience</li>
-                               </ul>
-                            </div>
-                        </div>
-
                     </div>
-                    <!-- Right Content -->
-                    <div class="col-xl-4 col-lg-4">
-                        <div class="post-details3  mb-50">
+                    <!-- job single End -->
+
+                    <div class="job-post-details">
+                        <div class="post-details1 mb-50">
                             <!-- Small Section Tittle -->
-                           <div class="small-section-tittle">
-                               <h4>Job Overview</h4>
-                           </div>
-                          <ul>
-                              <li>Posted date : <span th:text="${job.posted.format('dd MMM yyyy')}">12 Aug 2019</span></li>
-                              <li >Location : <span th:text="${job.location.getCity()}">New York</span></li>
-                              <li>Vacancy : <span th:text="${job.vacancy}">02</span></li>
-                              <li>Job nature : <span th:text="${job.jobNature.label}">Full time</span></li>
-                              <li>Salary :  <span th:text="${job.salary}">$7,800 yearly</span></li>
-                              <li>Application date : <span th:text="${job.due.format('dd MMM yyyy')}">12 Sep 2020</span></li>
-                          </ul>
-                         <div class="apply-btn2">
-                            <a href="#" class="btn">Apply Now</a>
-                         </div>
-                       </div>
-                        <div class="post-details4  mb-50">
+                            <div class="small-section-tittle">
+                                <h4>Job Description</h4>
+                            </div>
+                            <p th:text="${job.description}">It is a long established fact that a reader will beff
+                                distracted by vbthe creadable content of a page when looking at its layout. The pointf
+                                of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters,
+                                as opposed to using, Content here content here making it look like readable.</p>
+                        </div>
+                        <div class="post-details2  mb-50">
                             <!-- Small Section Tittle -->
-                           <div class="small-section-tittle">
-                               <h4>Company Information</h4>
-                           </div>
-                              <span th:text="${job.company.name}">Colorlib</span>
-                              <p th:text="${job.company.description}">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                            <div class="small-section-tittle">
+                                <h4>Required Knowledge, Skills, and Abilities</h4>
+                            </div>
                             <ul>
-                                <li>Name: <span th:text="${job.company.name}">Colorlib </span></li>
-                                <li>Web : <span th:text="${job.company.website}"> colorlib.com</span></li>
-                                <li>Email: <span th:text="${job.company.email}">carrier.colorlib@gmail.com</span></li>
+                                <li th:each="skill : ${job.getSkills}" th:text="${skill.name}">System Software
+                                    Development
+                                </li>
                             </ul>
-                       </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Right Content -->
+                <div class="col-xl-4 col-lg-4">
+                    <div class="post-details3  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Job Overview</h4>
+                        </div>
+                        <ul>
+                            <li>Posted date : <span th:text="${job.posted.format('dd MMM yyyy')}">12 Aug 2019</span>
+                            </li>
+                            <li>Location : <span th:text="${job.location.getCity()}">New York</span></li>
+                            <li>Vacancy : <span th:text="${job.vacancy}">02</span></li>
+                            <li>Job nature : <span th:text="${job.jobNature.label}">Full time</span></li>
+                            <li>Salary : <span th:text="${job.salary}">$7,800 yearly</span></li>
+                            <li>Application date : <span th:text="${job.due.format('dd MMM yyyy')}">12 Sep 2020</span>
+                            </li>
+                        </ul>
+                        <form th:action="@{/jobs/apply/{id}(id=${job.id})}" th:method="POST" style="display:inline;">
+                            <button type="submit" class="btn head-btn2">Apply</button>
+                        </form>
+                    </div>
+                    <div class="post-details4  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Company Information</h4>
+                        </div>
+                        <span th:text="${job.company.name}">Colorlib</span>
+                        <p th:text="${job.company.description}">It is a long established fact that a reader will be
+                            distracted by the readable content of a page when looking at its layout.</p>
+                        <ul>
+                            <li>Name: <span th:text="${job.company.name}">Colorlib </span></li>
+                            <li>Web : <span th:text="${job.company.website}"> colorlib.com</span></li>
+                            <li>Email: <span th:text="${job.company.email}">carrier.colorlib@gmail.com</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- job post company End -->
+    </div>
+    <!-- job post company End -->
 
-    </main>
-    <footer>
-        <!-- Footer Start-->
-        <th:block th:replace="~{/fragment/footer}"></th:block>
-        <!-- Footer End-->
-    </footer>
+</main>
+<footer>
+    <!-- Footer Start-->
+    <th:block th:replace="~{/fragment/footer}"></th:block>
+    <!-- Footer End-->
+</footer>
 
-	<!-- JS here -->
-	
-		<!-- All JS Custom Plugins Link Here here -->
-        <script src="/js/vendor/modernizr-3.5.0.min.js"></script>
-		<!-- Jquery, Popper, Bootstrap -->
-		<script src="/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-	    <!-- Jquery Mobile Menu -->
-        <script src="/js/jquery.slicknav.min.js"></script>
+<!-- JS here -->
 
-		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="/js/owl.carousel.min.js"></script>
-        <script src="/js/slick.min.js"></script>
-        <script src="/js/price_rangs.js"></script>
-        
-		<!-- One Page, Animated-HeadLin -->
-        <script src="/js/wow.min.js"></script>
-		<script src="/js/animated.headline.js"></script>
-        <script src="/js/jquery.magnific-popup.js"></script>
+<!-- All JS Custom Plugins Link Here here -->
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/js/jquery.slicknav.min.js"></script>
 
-		<!-- Scrollup, nice-select, sticky -->
-        <script src="/js/jquery.scrollUp.min.js"></script>
-        <script src="/js/jquery.nice-select.min.js"></script>
-		<script src="/js/jquery.sticky.js"></script>
-        
-        <!-- contact js -->
-        <script src="/js/contact.js"></script>
-        <script src="/js/jquery.form.js"></script>
-        <script src="/js/jquery.validate.min.js"></script>
-        <script src="/js/mail-script.js"></script>
-        <script src="/js/jquery.ajaxchimp.min.js"></script>
-        
-		<!-- Jquery Plugins, main Jquery -->	
-        <script src="/js/plugins.js"></script>
-        <script src="/js/main.js"></script>
-        
-    </body>
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+
+<!-- contact js -->
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
 </html>

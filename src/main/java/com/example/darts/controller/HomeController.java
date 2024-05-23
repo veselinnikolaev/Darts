@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeController extends BaseController{
-    public HomeController(AccountService accountService, LocationService locationService, CompanyService companyService, ExperienceService experienceService, SkillService skillService, JobApplicationService jobApplicationService) {
-        super(accountService, locationService, companyService, experienceService, skillService, jobApplicationService);
+    public HomeController(AccountService accountService, LocationService locationService, CompanyService companyService, SkillService skillService, JobApplicationService jobApplicationService, ProjectService projectService) {
+        super(accountService, locationService, companyService, skillService, jobApplicationService, projectService);
     }
 
     @GetMapping("/")

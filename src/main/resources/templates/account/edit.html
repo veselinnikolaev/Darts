@@ -127,14 +127,6 @@
                             <option th:each="skill : ${allSkills}" th:value="${skill.id}" th:text="${skill.name}"></option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="experiences">Experiences</label>
-                        <select multiple class="form-control scrollable-select" id="experiences"
-                                name="experiences">
-                            <option selected="selected" disabled>Add Experiences</option>
-                            <option th:each="experience : ${allExperiences}" th:value="${experience.id}" th:text="${experience.name}"></option>
-                        </select>
-                    </div>
                     <hr class="hr-2 bg-white">
                     <div class="button-holder d-flex justify-content-center">
                         <button type="submit" class="btn post-btn">Edit</button>

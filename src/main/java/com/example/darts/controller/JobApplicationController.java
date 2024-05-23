@@ -18,9 +18,9 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/jobs")
-public class JobApplicationController extends BaseController{
-    public JobApplicationController(AccountService accountService, LocationService locationService, CompanyService companyService, ExperienceService experienceService, SkillService skillService, JobApplicationService jobApplicationService) {
-        super(accountService, locationService, companyService, experienceService, skillService, jobApplicationService);
+public class JobApplicationController extends BaseController {
+    public JobApplicationController(AccountService accountService, LocationService locationService, CompanyService companyService, SkillService skillService, JobApplicationService jobApplicationService, ProjectService projectService) {
+        super(accountService, locationService, companyService, skillService, jobApplicationService, projectService);
     }
 
     @GetMapping("/all")
@@ -47,22 +47,33 @@ public class JobApplicationController extends BaseController{
                 .addObject("jobsPage", jobsPage)
                 .addObject("jobApplicationService", jobApplicationService);
     }
+
     @GetMapping("/post")
     public ModelAndView postJob(@ModelAttribute(name = "jobApplication") JobApplicationBindingModel bindingModel, Principal principal) {
         Account account = accountService.getByEmail(principal.getName());
 
-        return getWithLocationsExperiencesAndSkills("/job/post")
+        return getWithLocationsExperienceLevelsAndSkills("/job/post")
                 .addObject("companies", account.getCompanies());
     }
 
     @PostMapping("/post")
     public ModelAndView postJobConfirm(@ModelAttribute(name = "jobApplication") @Valid JobApplicationBindingModel bindingModel, BindingResult bindingResult, Principal principal) {
         Account account = accountService.getByEmail(principal.getName());
-        if(bindingResult.hasErrors()) {
-            return getWithLocationsExperiencesAndSkills("/job/post")
+        if (bindingResult.hasErrors()) {
+            return getWithLocationsExperienceLevelsAndSkills("/job/post")
                     .addObject("companies", account.getCompanies());
         }
         jobApplicationService.save(bindingModel, account);
+        return new ModelAndView("redirect:/jobs/all");
+    }
+
+    @PostMapping("/apply/{id}")
+    public ModelAndView applyForJob(@PathVariable Long id, Principal principal) {
+        Account account = accountService.getByEmail(principal.getName());
+        JobApplication jobApplication = jobApplicationService.getById(id);
+
+        jobApplicationService.apply(jobApplication, account);
+
         return new ModelAndView("redirect:/jobs/all");
     }
 }

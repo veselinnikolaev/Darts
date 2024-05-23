@@ -1,6 +1,7 @@
 package com.example.darts.service;
 
 import com.example.darts.model.binding.JobApplicationBindingModel;
+import com.example.darts.model.binding.ProjectCreateBindingModel;
 import com.example.darts.model.entity.*;
 import com.example.darts.model.enumeration.Category;
 import com.example.darts.repository.JobApplicationRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,9 +22,7 @@ import java.util.List;
 public class JobApplicationService {
     private final JobApplicationRepository repository;
     private final LocationService locationService;
-    private final CompanyService companyService;
-    private final SkillService skillService;
-    private final ExperienceService experienceService;
+    private final AccountService accountService;
 
     public Page<JobApplication> getAll(Pageable pageable) {
         return repository.findAll(pageable);
@@ -107,5 +107,27 @@ public class JobApplicationService {
 
     public void save(JobApplicationBindingModel bindingModel, Account account) {
         repository.save(new JobApplication(bindingModel, account));
+    }
+
+    public void apply(JobApplication jobApplication, Account account) {
+        List<JobApplication> accountApplications = account.getJobApplications();
+        if (accountApplications == null) {
+            accountApplications = List.of(jobApplication);
+        } else {
+            accountApplications.add(jobApplication);
+        }
+
+        List<Account> applicants = jobApplication.getApplicants();
+        if (applicants == null) {
+            applicants = List.of(account);
+        } else {
+            applicants.add(account);
+        }
+
+        jobApplication.setApplicants(applicants);
+        account.setJobApplications(accountApplications);
+
+        accountService.save(account);
+        repository.save(jobApplication);
     }
 }

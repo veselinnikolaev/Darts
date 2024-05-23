@@ -17,6 +17,7 @@ import java.util.List;
 public class AccountService {
     private final AccountRepository repository;
     private final PasswordEncoder encoder;
+    private final CloudinaryService cloudinaryService;
     public void register(AccountRegisterBindingModel accountRegisterBindingModel) {
         Account account = new Account(accountRegisterBindingModel);
         account.setPassword(encoder.encode(account.getPassword()));
@@ -36,11 +37,21 @@ public class AccountService {
         account.setLocation(bindingModel.getLocation());
         account.setPhone(bindingModel.getPhone());
         account.setAbout(bindingModel.getAbout());
-        account.setPhoto(bindingModel.getPhoto().getOriginalFilename());
-        account.setCV(bindingModel.getCv().getOriginalFilename());
         account.setSkills(bindingModel.getSkills());
-        account.setExperiences(bindingModel.getExperiences());
 
+        if(bindingModel.getPhoto() != null) {
+            String photoUrl = cloudinaryService.uploadImage(bindingModel.getPhoto());
+            account.setPhoto(photoUrl);
+        }
+        if (bindingModel.getCv() != null) {
+            String cvUrl = cloudinaryService.uploadImage(bindingModel.getCv());
+            account.setCv(cvUrl);
+        }
+
+        repository.save(account);
+    }
+
+    public void save(Account account) {
         repository.save(account);
     }
 }

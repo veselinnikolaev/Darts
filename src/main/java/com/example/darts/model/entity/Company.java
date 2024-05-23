@@ -36,12 +36,12 @@ public class Company extends BaseEntity{
         this.accounts = List.of(account);
     }
 
-    public Company(CompanyBindingModel bindingModel){
+    public Company(CompanyBindingModel bindingModel, String logoUrl){
         this.name = bindingModel.getName();
         this.description = bindingModel.getDescription();
         this.website = bindingModel.getWebsite();
         this.email = bindingModel.getEmail();
-        //this.logo = bindingModel.getLogo();
+        this.logo = logoUrl;
         this.locations = bindingModel.getLocations();
     }
 }

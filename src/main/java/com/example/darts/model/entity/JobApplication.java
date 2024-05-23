@@ -2,16 +2,15 @@ package com.example.darts.model.entity;
 
 import com.example.darts.model.binding.JobApplicationBindingModel;
 import com.example.darts.model.enumeration.Category;
+import com.example.darts.model.enumeration.ExperienceLevel;
 import com.example.darts.model.enumeration.JobNature;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Entity
@@ -32,9 +31,9 @@ public class JobApplication extends BaseEntity {
     private LocalDate posted;
     private LocalDate due;
     @ManyToMany(mappedBy = "jobApplications")
-    private List<Skill> requiredSkills;
-    @ManyToMany(mappedBy = "jobApplications")
-    private List<Experience> requiredExperiences;
+    private List<Skill> skills;
+    @Enumerated(EnumType.STRING)
+    private ExperienceLevel experienceLevel;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(EnumType.STRING)
@@ -51,8 +50,8 @@ public class JobApplication extends BaseEntity {
         this.jobNature = bindingModel.getJobNature();
         this.posted = LocalDate.now();
         this.due = LocalDate.parse(bindingModel.getDue());
-        this.requiredSkills = bindingModel.getRequiredSkills();
-        this.requiredExperiences = bindingModel.getRequiredExperiences();
+        this.skills = bindingModel.getSkills();
+        this.experienceLevel = bindingModel.getExperienceLevel();
         this.description = bindingModel.getDescription();
         this.category = bindingModel.getCategory();
     }

@@ -1,12 +1,11 @@
 package com.example.darts.init;
 
+import com.example.darts.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,19 +14,20 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class LogoInit implements CommandLineRunner {
-    private static final String LOGO_PATH = "src/main/resources/static/img/logo/preloader_logo.png";
-    private static final String OUTPUT_LOGO_PATH = "src/main/resources/static/img/logo/logo.png";
+    private static final String LOGO_PATH = "src/main/resources/static/img/logo/unsized_logo.png";
+    private static final String OUTPUT_LOGO_PATH = "src/main/resources/static/img/logo/preloader_logo.png";
 
     @Override
     public void run(String... args) throws Exception {
         // Read the original image
-        BufferedImage bufferedImage = ImageIO.read(new File(LOGO_PATH));
+        //BufferedImage bufferedImage = ImageIO.read(new File(LOGO_PATH));
 
         // Resize the image
-        BufferedImage resizedImage = resizeImage(bufferedImage, 150, 75);
+        //BufferedImage resizedImage = resizeImage(bufferedImage, 1000, 150);
 
         // Save the resized image
-        saveResizedImage(resizedImage, OUTPUT_LOGO_PATH);
+        //saveResizedImage(resizedImage, OUTPUT_LOGO_PATH);
+
     }
 
     private BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {

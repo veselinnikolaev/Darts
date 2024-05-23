@@ -40,3 +40,7 @@ server:
     include-stacktrace: always
     include-message: always
   port: 8080
+cloudinary:
+  cloud-name: dugpa0ch5
+  api-key: 967517151849929
+  api-secret: Ll8v6JgA1m9EndPM7EgGwrN_3WA

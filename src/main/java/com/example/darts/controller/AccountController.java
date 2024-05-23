@@ -3,7 +3,6 @@ package com.example.darts.controller;
 import com.example.darts.model.binding.AccountEditBindingModel;
 import com.example.darts.model.binding.AccountRegisterBindingModel;
 import com.example.darts.model.entity.Account;
-import com.example.darts.model.entity.Location;
 import com.example.darts.service.*;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,8 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/account")
 public class AccountController extends BaseController {
-    public AccountController(AccountService accountService, LocationService locationService, CompanyService companyService, ExperienceService experienceService, SkillService skillService, JobApplicationService jobApplicationService) {
-        super(accountService, locationService, companyService, experienceService, skillService, jobApplicationService);
+    public AccountController(AccountService accountService, LocationService locationService, CompanyService companyService, SkillService skillService, JobApplicationService jobApplicationService, ProjectService projectService) {
+        super(accountService, locationService, companyService, skillService, jobApplicationService, projectService);
     }
 
     @GetMapping("/register")
@@ -56,14 +55,14 @@ public class AccountController extends BaseController {
 
     @GetMapping("/edit")
     public ModelAndView edit(@ModelAttribute (name = "account") AccountEditBindingModel bindingModel, Principal principal) {
-        return getWithLocationsExperiencesAndSkills("/account/edit")
+        return getWithLocationsExperienceLevelsAndSkills("/account/edit")
                 .addObject("account", accountService.getByEmail(principal.getName()));
     }
 
     @PostMapping("/edit")
-    public ModelAndView edit(@ModelAttribute(name = "account") @Valid AccountEditBindingModel bindingModel, BindingResult bindingResult, Principal principal) {
+    public ModelAndView editConfirm(@ModelAttribute(name = "account") @Valid AccountEditBindingModel bindingModel, BindingResult bindingResult, Principal principal) {
         if(bindingResult.hasErrors()){
-            return getWithLocationsExperiencesAndSkills("/account/edit")
+            return getWithLocationsExperienceLevelsAndSkills("/account/edit")
                     .addObject("account", accountService.getByEmail(principal.getName()));
         }
         Account account = accountService.getByEmail(principal.getName());

@@ -1,11 +1,8 @@
 package com.example.darts.model.binding;
 
-import com.example.darts.model.entity.Experience;
 import com.example.darts.model.entity.Location;
 import com.example.darts.model.entity.Skill;
-import com.example.darts.validation.annotation.ConfirmPassword;
 import com.example.darts.validation.annotation.UniqueEmail;
-import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,5 +32,4 @@ public class AccountEditBindingModel {
     private MultipartFile photo;
     private MultipartFile cv;
     private List<Skill> skills;
-    private List<Experience> experiences;
 }

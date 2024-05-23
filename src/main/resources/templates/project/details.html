@@ -1,0 +1,120 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Project Details - Darts</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<th:block th:replace="~{/fragment/preloader}"></th:block>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <th:block th:replace="~{/fragment/navbar}"></th:block>
+    <!-- Header End -->
+</header>
+
+<main id="main">
+
+    <!-- ======= Project Details Section ======= -->
+    <section id="project-details" class="about-mf sect-pt4 route">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box-shadow-full">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="about-img">
+                                    <img th:unless="${project.photo == null}" th:src="${project.photo}"
+                                         class="img-fluid" alt="">
+                                    <img th:if="${project.photo == null}" th:src="${project.skills.get(0).photoUrl}"
+                                         class="img-fluid" alt="">
+                                </div>
+                                <div class="about-info mt-3">
+                                    <h5><span class="title-s">Project Name: </span><span
+                                            th:text="${project.name}"></span></h5>
+                                    <h5><span class="title-s">Posted: </span><span
+                                            th:text="${#dates.format(project.posted)}"></span></h5>
+                                    <h5><span class="title-s">Category: </span><span
+                                            th:text="${project.category.label}"></span></h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="about-me pt-4 pt-md-0">
+                                    <div class="title-box-2">
+                                        <h5 class="title-left">Description</h5>
+                                    </div>
+                                    <p class="lead" th:text="${project.description}"></p>
+                                </div>
+                                <div class="skill-mf mt-4">
+                                    <h5 class="title-s">Skills Required</h5>
+                                    <p th:if="${project.skills.isEmpty()}">No skills required for this project.</p>
+                                    <ul class="list-inline" th:unless="${project.skills.isEmpty()}">
+                                        <li class="list-inline-item badge badge-info m-1"
+                                            th:each="skill : ${project.skills}" th:text="${skill.name}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Project Details Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer>
+    <!-- Footer Start-->
+    <th:block th:replace="~{/fragment/footer}"></th:block>
+    <!-- Footer End-->
+</footer>
+
+<!-- JS here -->
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.slicknav.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+
+</html>

@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label for="company">Company</label>
-                        <select class="form-control" id="company" name="company" th:field="*{company}">
+                        <select class="form-control" id="company" name="company">
                             <option selected="selected" disabled>Select Company</option>
                             <option th:each="company : ${companies}" th:value="${company.id}"
                                     th:text="${company.name}"></option>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group">
                         <label for="location">Location</label>
-                        <select class="form-control" id="location" name="location" th:field="*{location}">
+                        <select class="form-control" id="location" name="location">
                             <option selected="selected" disabled>Select Location</option>
                             <option th:each="location : ${allLocations}" th:value="${location.id}"
                                     th:text="${location.city + ', ' + location.region}"></option>
@@ -82,7 +82,7 @@
                     <div class="form-group">
                         <label for="jobNature">Job Nature</label>
                         <select class="form-control scrollable-select" id="jobNature" name="jobNature"
-                                th:field="*{jobNature}">
+                                >
                             <option selected="selected" disabled>Select Job Nature</option>
                             <option th:each="nature : ${T(com.example.darts.model.enumeration.JobNature).values()}"
                                     th:value="${nature}" th:text="${nature.label}"></option>
@@ -96,25 +96,24 @@
                         <div class="alert alert-warning" th:if="${#fields.hasErrors('due')}" th:errors="*{due}"></div>
                     </div>
                     <div class="form-group">
-                        <label for="requiredSkills">Required Skills</label>
-                        <select multiple class="form-control scrollable-select" id="requiredSkills"
-                                name="requiredSkills" th:value="*{requiredSkills}">
+                        <label for="skills">Required Skills</label>
+                        <select multiple class="form-control scrollable-select" id="skills"
+                                name="skills" th:value="*{skills}">
                             <option selected="selected" disabled>Select Required Skills</option>
                             <option th:each="skill : ${allSkills}" th:value="${skill.id}" th:text="${skill.name}"></option>
                         </select>
-                        <div class="alert alert-warning" th:if="${#fields.hasErrors('requiredSkills')}"
-                             th:errors="*{requiredSkills}"></div>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('skills')}"
+                             th:errors="*{skills}"></div>
                     </div>
                     <div class="form-group">
-                        <label for="requiredExperiences">Required Experiences</label>
-                        <select multiple class="form-control scrollable-select" id="requiredExperiences"
-                                name="requiredExperiences" th:value="*{requiredExperiences}">
-                            <option selected="selected" disabled>Select Required Experiences</option>
-                            <option th:each="experience : ${allExperiences}" th:value="${experience.id}"
-                                    th:text="${experience.name}"></option>
+                        <label for="experienceLevel">Required experience level</label>
+                        <select multiple class="form-control scrollable-select" id="experienceLevel"
+                                name="experienceLevel" th:value="*{experienceLevel}">
+                            <option selected="selected" disabled>Select Required Skills</option>
+                            <option th:each="experienceLevel : ${allExperienceLevels}" th:value="${experienceLevel}" th:text="${experienceLevel.label}"></option>
                         </select>
-                        <div class="alert alert-warning" th:if="${#fields.hasErrors('requiredExperiences')}"
-                             th:errors="*{requiredExperiences}"></div>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('experienceLevel')}"
+                             th:errors="*{experienceLevel}"></div>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>

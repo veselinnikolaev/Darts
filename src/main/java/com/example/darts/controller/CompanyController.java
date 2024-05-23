@@ -17,8 +17,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/companies")
 public class CompanyController extends BaseController {
-    public CompanyController(AccountService accountService, LocationService locationService, CompanyService companyService, ExperienceService experienceService, SkillService skillService, JobApplicationService jobApplicationService) {
-        super(accountService, locationService, companyService, experienceService, skillService, jobApplicationService);
+    public CompanyController(AccountService accountService, LocationService locationService, CompanyService companyService, SkillService skillService, JobApplicationService jobApplicationService, ProjectService projectService) {
+        super(accountService, locationService, companyService, skillService, jobApplicationService, projectService);
     }
 
     @GetMapping("/post")

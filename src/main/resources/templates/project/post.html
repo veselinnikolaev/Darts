@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Create Project</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/price_rangs.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<th:block th:replace="~{/fragment/preloader}"></th:block>
+<header>
+    <th:block th:replace="~{/fragment/navbar}"></th:block>
+</header>
+<div class="container-fluid h-100">
+    <div class="row align-items-center justify-content-center h-100">
+        <div class="col-lg-4">
+            <div class="container m-4">
+                <form th:action="@{/projects/create}" th:method="POST" th:object="${project}"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name" class="font-weight-bold form-text">Project Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Project name..." name="name"
+                               th:errorclass="bg-danger" th:value="*{name}">
+
+                        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+                             th:if="${#fields.hasErrors('name')}">
+                            <small class="text-danger" th:errors="*{name}"></small>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="font-weight-bold form-text">Description</label>
+                        <textarea class="form-control" id="description" placeholder="Description..." name="description"
+                                  th:errorclass="bg-danger" th:value="*{description}" rows="5"></textarea>
+
+                        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert"
+                             th:if="${#fields.hasErrors('description')}">
+                            <small class="text-danger" th:errors="*{description}"></small>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo" class="font-weight-bold form-text">Photo</label>
+                        <input type="file" class="form-control-file" id="photo" name="photo">
+                    </div>
+                    <div class="form-group">
+                        <label for="skills" class="font-weight-bold form-text">Skills</label>
+                        <select multiple class="form-control scrollable-select" id="skills" name="skills">
+                            <option selected="selected" disabled>Add Skills</option>
+                            <option th:each="skill : ${allSkills}" th:value="${skill.id}"
+                                    th:text="${skill.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="font-weight-bold form-text">Category</label>
+                        <select class="form-control" id="category" name="category">
+                            <option selected="selected" disabled>Select Category</option>
+                            <option th:each="category : ${T(com.example.darts.model.enumeration.Category).values()}"
+                                    th:value="${category}" th:text="${category.label}"></option>
+                        </select>
+                    </div>
+                    <hr class="hr-2 bg-white">
+                    <div class="button-holder d-flex justify-content-center">
+                        <button type="submit" class="btn post-btn">Create Project</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.slicknav.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/price_rangs.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/animated.headline.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/mail-script.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
