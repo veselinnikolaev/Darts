@@ -109,12 +109,6 @@
                             <option th:each="location : ${allLocations}" th:value="${location.id}"
                                     th:text="${location.city + ', ' + location.region}"></option>
                         </select>
-                        <div class="alert alert-warning alert-dismissible fade show m-1" role="alert" th:if="${#fields.hasErrors('location')}">
-                            <small class="text-danger" th:errors="*{location}"></small>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="phone" class="font-weight-bold form-text">Phone number</label>

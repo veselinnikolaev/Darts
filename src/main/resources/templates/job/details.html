@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2 th:text="${job.experienceLevel.label + ' ' + job.position}"></h2>
+                            <h2 th:text="${job.experienceLevel.label + ' ' + job.title}"></h2>
                         </div>
                     </div>
                 </div>
@@ -62,11 +62,10 @@
                     <div class="single-job-items mb-50">
                         <div class="job-items">
                             <div class="company-img company-img-details img-entity">
-                                <img th:unless="${job.company.logo == null}" th:src="${job.company.logo}" alt="">
-                                <img th:if="${job.company.logo == null}" src="/img/entity/company_alt.png" alt="">
+                                <img th:src="${job.company.logo == null ? '/img/entity/company_alt.png' : job.company.logo}" alt="">
                             </div>
                             <div class="job-tittle">
-                                <h4 th:text="${job.experienceLevel.label + ' ' + job.position}"></h4>
+                                <h4 th:text="${job.title}"></h4>
                                 <ul>
                                     <li th:text="${job.company.name}">Creative Agency</li>
                                     <li><i class="fas fa-map-marker-alt"
@@ -116,7 +115,7 @@
                             </li>
                             <li>Location : <span th:text="${job.location.getCity()}">New York</span></li>
                             <li>Vacancy : <span th:text="${job.vacancy}">02</span></li>
-                            <li>Job nature : <span th:text="${job.jobNature.label}">Full time</span></li>
+                            <li>Job nature : <span th:text="${job.employmentType.label}">Full time</span></li>
                             <li>Salary : <span th:text="${job.salary}">$7,800 yearly</span></li>
                             <li>Application date : <span th:text="${job.due.format('dd MMM yyyy')}">12 Sep 2020</span>
                             </li>

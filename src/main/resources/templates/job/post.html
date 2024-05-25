@@ -81,10 +81,9 @@
                     </div>
                     <div class="form-group">
                         <label for="jobNature">Job Nature</label>
-                        <select class="form-control scrollable-select" id="jobNature" name="jobNature"
-                                >
+                        <select class="form-control scrollable-select" id="jobNature" name="jobNature">
                             <option selected="selected" disabled>Select Job Nature</option>
-                            <option th:each="nature : ${T(com.example.darts.model.enumeration.JobNature).values()}"
+                            <option th:each="nature : ${T(com.example.darts.model.enumeration.EmploymentType).values()}"
                                     th:value="${nature}" th:text="${nature.label}"></option>
                         </select>
                         <div class="alert alert-warning" th:if="${#fields.hasErrors('jobNature')}"
@@ -124,8 +123,7 @@
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
-                        <select class="form-control scrollable-select" id="category" name="category"
-                                th:field="*{category}">
+                        <select class="form-control scrollable-select" id="category" name="category">
                             <option selected="selected" disabled>Select Category</option>
                             <option th:each="category : ${T(com.example.darts.model.enumeration.Category).values()}"
                                     th:value="${category}" th:text="${category.label}"></option>

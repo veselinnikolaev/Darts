@@ -5,7 +5,7 @@ import com.example.darts.model.entity.Location;
 import com.example.darts.model.entity.Skill;
 import com.example.darts.model.enumeration.Category;
 import com.example.darts.model.enumeration.ExperienceLevel;
-import com.example.darts.model.enumeration.JobNature;
+import com.example.darts.model.enumeration.EmploymentType;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -26,10 +26,10 @@ public class JobApplicationBindingModel {
     @Positive
     private Double salary;
     @NotNull
-    private JobNature jobNature;
+    private EmploymentType employmentType;
     @Future
     private String due;
-    @NotNull
+    @NotEmpty
     private List<Skill> skills;
     @NotNull
     private ExperienceLevel experienceLevel;

@@ -85,7 +85,7 @@
                                 <select name="select">
                                     <option value="all">All Category</option>
                                     <option th:each="jobCategory : ${T(com.example.darts.model.enumeration.Category).values()}"
-                                            th:value="${jobCategory.name()}"
+                                            th:value="${jobCategory}"
                                             th:text="${jobCategory.label}"></option>
                                 </select>
                             </div>
@@ -93,22 +93,12 @@
                             <!-- select-Categories start -->
                             <div class="select-Categories pt-80 pb-50">
                                 <div class="small-section-tittle2">
-                                    <h4>Job Type</h4>
+                                    <h4>Employment type</h4>
                                 </div>
-                                <label class="container">Full Time
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Part Time
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Remote
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Freelance
-                                    <input type="checkbox">
+                                <label class="container"
+                                       th:each="empType : ${T(com.example.darts.model.enumeration.EmploymentType).values()}"
+                                       th:text="${empType.label}">
+                                    <input type="checkbox" name="employmentType" th:value="${empType}">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -117,7 +107,7 @@
                         <!-- single two -->
                         <div class="single-listing">
                             <div class="small-section-tittle2">
-                                <h4>Job Location</h4>
+                                <h4>Location</h4>
                             </div>
                             <!-- Select job items start -->
                             <div class="select-job-items2">
@@ -132,22 +122,12 @@
                             <!-- select-Categories start -->
                             <div class="select-Categories pt-80 pb-50">
                                 <div class="small-section-tittle2">
-                                    <h4>Level of experience</h4>
+                                    <h4>Experience level</h4>
                                 </div>
-                                <label class="container">Internship
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Junior
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Middle
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Senior
-                                    <input type="checkbox">
+                                <label class="container"
+                                       th:each="expLevel : ${T(com.example.darts.model.enumeration.ExperienceLevel).values()}"
+                                       th:text="${expLevel.label}">
+                                    <input type="checkbox" name="experienceLevel" th:value="${expLevel}">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -160,28 +140,9 @@
                                 <div class="small-section-tittle2">
                                     <h4>Posted Within</h4>
                                 </div>
-                                <label class="container">Any
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Today
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Last 2 days
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Last 3 days
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Last 5 days
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Last 10 days
-                                    <input type="checkbox">
+                                <label class="container" th:each="posted : ${T(com.example.darts.model.enumeration.DatePosted).values()}"
+                                th:text="${posted.label}">
+                                    <input type="checkbox" name="posted" th:value="${posted}">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -199,7 +160,7 @@
                                         <input type="text" class="js-range-slider" value=""/>
                                         <div class="d-flex align-items-center">
                                             <div class="price_text">
-                                                <p>Price :</p>
+                                                <p>Salary:</p>
                                             </div>
                                             <div class="price_value d-flex justify-content-center">
                                                 <input type="text" class="js-input-from" id="amount1" readonly/>
@@ -212,6 +173,7 @@
                             </aside>
                             <!-- Range Slider End -->
                         </div>
+                        <a th:href="@{/all(keyword=${keyword}, location=${locationId})}" class="btn head-btn2">Filter</a>
                     </div>
                     <!-- Job Category Listing End -->
                 </div>
@@ -250,25 +212,26 @@
                                 <div class="job-items">
                                     <div class="company-img">
                                         <a th:href="@{/jobs/details/{id}(id=${job.id})}">
-                                            <img th:unless="${job.company.logo == null}" th:src="${job.company.logo}" alt="">
-                                            <img th:if="${job.company.logo == null}" src="/img/entity/company_alt.png" alt="">
+                                            <img th:src="${job.company.logo == null ? '/img/entity/company_alt.png' : job.company.logo}" alt="">
                                         </a>
                                     </div>
                                     <div class="job-tittle job-tittle2">
                                         <a th:href="@{/jobs/details/{id}(id=${job.id})}">
-                                            <h4 th:text="${job.position}"></h4>
+                                            <h4 th:text="${job.title}"></h4>
                                         </a>
                                         <ul>
-                                            <li th:text="${job.experienceLevel.label + ' ' + job.position}">Creative Agency</li>
+                                            <li th:text="${job.title}">Creative Agency</li>
                                             <li><i class="fas fa-map-marker-alt"
-                                                   th:text="${job.location.getCity() + ', ' + job.location.getRegion()}"></i>
+                                                   th:text="${job.location.getRegion() == null ?
+                                                   job.location.getCity() + ', ' + job.location.getCountry() :
+                                                   job.location.getCity() + ', ' + job.location.getRegion()}"></i>
                                             </li>
-                                            <li th:text="${job.salary}">$3500 - $4000</li>
+                                            <li th:text="${job.salary}"></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="items-link items-link2 f-right">
-                                    <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:text="${job.jobNature.label}">Full
+                                    <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:text="${job.employmentType.label}">Full
                                         Time</a>
                                     <span th:text="${jobApplicationService.calculateTimeAgo(job.posted)}">7 hours ago</span>
                                 </div>
@@ -290,16 +253,19 @@
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-start">
                                 <li th:classappend="${jobsPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
-                                    <a class="page-link" th:href="@{/jobs/all(page=${jobsPage.number - 1}, size=${jobsPage.size})}">
+                                    <a class="page-link" th:href="@{/jobs/all(page=${jobsPage.number - 1},
+                                     size=${jobsPage.size}, keyword=${keyword}, location=${locationId})}">
                                         <span class="ti-angle-left"></span>
                                     </a>
                                 </li>
                                 <li th:each="pageNum : ${#numbers.sequence(1, jobsPage.totalPages)}"
                                     th:classappend="${pageNum == jobsPage.number + 1} ? 'page-item active' : 'page-item'">
-                                    <a class="page-link" th:href="@{/jobs/all(page=${pageNum - 1}, size=${jobsPage.size})}" th:text="${pageNum}">01</a>
+                                    <a class="page-link" th:href="@{/jobs/all(page=${pageNum - 1},
+                                     size=${jobsPage.size}, keyword=${keyword}, location=${locationId})}" th:text="${pageNum}">01</a>
                                 </li>
                                 <li th:classappend="${jobsPage.hasNext()} ? 'page-item' : 'page-item disabled'">
-                                    <a class="page-link" th:href="@{/jobs/all(page=${jobsPage.number + 1}, size=${jobsPage.size})}">
+                                    <a class="page-link" th:href="@{/jobs/all(page=${jobsPage.number + 1},
+                                     size=${jobsPage.size}, keyword=${keyword}, location=${locationId})}">
                                         <span class="ti-angle-right"></span>
                                     </a>
                                 </li>

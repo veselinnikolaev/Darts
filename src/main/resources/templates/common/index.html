@@ -155,8 +155,7 @@
                         <div class="job-items">
                             <div class="company-img img-entity">
                                 <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET">
-                                    <img th:unless="${job.company.logo == null}" th:src="${job.company.logo}" alt="">
-                                    <img th:if="${job.company.logo == null}" src="/img/entity/company_alt.png" alt="">
+                                    <img th:src="${job.company.logo == null ? '/img/entity/company_alt.png' : job.company.logo}" alt="">
                                 </a>
                             </div>
                             <div class="job-tittle">

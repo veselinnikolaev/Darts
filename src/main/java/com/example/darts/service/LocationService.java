@@ -17,7 +17,21 @@ public class LocationService {
                 .orElseThrow(() -> new RuntimeException("Location not found"));
     }
 
+    public Location getByCity(String city){
+        return repository.findFirstByCity(city)
+                .orElse(repository.save(new Location()));
+    }
+
     public List<Location> getAll() {
         return repository.findAll();
+    }
+
+    public boolean existsByCity(String city) {
+
+        return repository.existsByCity(city);
+    }
+
+    public Location save(Location location) {
+        return repository.save(location);
     }
 }

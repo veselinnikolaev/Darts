@@ -24,7 +24,6 @@ public class AccountEditBindingModel {
     @UniqueEmail(message = "Email already exists!")
     @NotBlank(message = "Email cannot be empty!")
     private String email;
-    @NotNull
     private Location location;
     //@Phone
     private String phone;

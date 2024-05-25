@@ -100,15 +100,14 @@
                 <div class="col-md-4" th:unless="${account.projects.isEmpty()}" th:each="project : ${account.projects.stream().limit(6).toList()}">
                     <div class="work-box">
                         <div class="work-img">
-                            <img th:unless="${project.photo == null}" th:src="${project.photo}" class="img-fluid" alt="">
-                            <img th:if="${project.photo == null}" th:src="${project.skills.get(0).photoUrl}" class="img-fluid" alt="">
+                            <img th:src="${project.photo == null ? project.skills.get(0).photoUrl : project.photo}" class="img-fluid" alt="">
                         </div>
                         <div class="work-content">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <h2 class="w-title" th:text="${project.name}"></h2>
                                     <div class="w-more">
-                                        <span class="w-ctegory" th:text="${project.category.label}"></span> / <span class="w-date" th:text="${#dates.format(project.posted)}"></span>
+                                        <span class="w-ctegory" th:text="${project.category.label}"></span> / <span class="w-date" th:text="${project.posted}"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -119,6 +118,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-12 text-center mt-4">
+                    <a th:href="@{/projects/post}" class="btn btn-primary">Add Project</a>
                 </div>
             </div>
         </div>

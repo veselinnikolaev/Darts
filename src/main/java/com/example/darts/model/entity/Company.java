@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,11 +16,11 @@ import java.util.List;
 public class Company extends BaseEntity{
     @Column(unique = true)
     private String name;
+    private String logo;
+    private String website;
     @Column(columnDefinition = "TEXT")
     private String description;
-    private String website;
     private String email;
-    private String logo;
     @ManyToMany(mappedBy = "companies")
     private List<Location> locations;
     @OneToMany(mappedBy = "company")
@@ -32,8 +33,8 @@ public class Company extends BaseEntity{
         this.description = account.getAbout();
         this.email = account.getEmail();
         this.logo = account.getPhoto();
-        this.locations = List.of(account.getLocation() == null ? new Location() : account.getLocation());
-        this.accounts = List.of(account);
+        this.locations = new ArrayList<>(List.of(account.getLocation()));
+        this.accounts = new ArrayList<>(List.of(account));
     }
 
     public Company(CompanyBindingModel bindingModel, String logoUrl){

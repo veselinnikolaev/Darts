@@ -46,9 +46,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="about-img">
-                                    <img th:unless="${project.photo == null}" th:src="${project.photo}"
-                                         class="img-fluid" alt="">
-                                    <img th:if="${project.photo == null}" th:src="${project.skills.get(0).photoUrl}"
+                                    <img th:src="${project.photo == null ?
+                                     project.skills.get(0).photoUrl : project.photo}"
                                          class="img-fluid" alt="">
                                 </div>
                                 <div class="about-info mt-3">

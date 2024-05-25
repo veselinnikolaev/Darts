@@ -16,6 +16,7 @@ public class Location extends BaseEntity{
     private Double latitude;
     private Double longitude;
     private String region;
+    private String country;
     @ManyToMany
     private List<Company> companies;
     @OneToMany(mappedBy = "location")
@@ -28,5 +29,12 @@ public class Location extends BaseEntity{
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
         this.region = location.getRegion();
+    }
+
+    public Location(String city, Double latitude, Double longitude, String country){
+        this.city = city;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.country = country;
     }
 }

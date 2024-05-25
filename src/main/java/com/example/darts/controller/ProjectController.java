@@ -4,7 +4,6 @@ import com.example.darts.model.binding.ProjectCreateBindingModel;
 import com.example.darts.model.entity.Account;
 import com.example.darts.service.*;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +33,7 @@ public class ProjectController extends BaseController {
                     .addObject("allSkills", skillService.getAll());
         }
         Account account = accountService.getByEmail(principal.getName());
-        projectService.post(bindingModel, account);
+        projectService.save(bindingModel, account);
 
         return new ModelAndView("redirect:/account/profile");
     }

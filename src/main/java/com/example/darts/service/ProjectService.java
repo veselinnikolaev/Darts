@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class ProjectService {
     private final ProjectRepository repository;
     private final CloudinaryService cloudinaryService;
-    public void post(ProjectCreateBindingModel bindingModel, Account account) {
+    public void save(ProjectCreateBindingModel bindingModel, Account account) {
         String photoUrl = null;
         if(bindingModel.getPhoto() != null){
             photoUrl = cloudinaryService.uploadImage(bindingModel.getPhoto());

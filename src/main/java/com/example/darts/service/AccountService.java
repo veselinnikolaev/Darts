@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,11 +19,24 @@ public class AccountService {
     private final AccountRepository repository;
     private final PasswordEncoder encoder;
     private final CloudinaryService cloudinaryService;
+    private final CompanyService companyService;
+
     public void register(AccountRegisterBindingModel accountRegisterBindingModel) {
+        // Create Account entity from the binding model and encode the password
         Account account = new Account(accountRegisterBindingModel);
         account.setPassword(encoder.encode(account.getPassword()));
-        account.setCompanies(List.of(new Company(account)));
 
+        // Save the Account entity first
+        repository.save(account);
+
+        // Create and save the Company entity with a reference to the saved Account
+        Company company = new Company(account);
+        account.setCompanies(new ArrayList<>(List.of(company)));
+
+        // Save the Company entity
+        companyService.save(company);
+
+        // Update the Account entity with the reference to the saved Company and save it again if needed
         repository.save(account);
     }
 

@@ -32,7 +32,7 @@
     <div class="row align-items-center justify-content-center h-100">
         <div class="col-lg-4">
             <div class="container m-4">
-                <form th:action="@{/projects/create}" th:method="POST" th:object="${project}"
+                <form th:action="@{/projects/post}" th:method="POST" th:object="${project}"
                       enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="name" class="font-weight-bold form-text">Project Name</label>

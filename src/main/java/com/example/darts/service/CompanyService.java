@@ -14,12 +14,21 @@ import java.util.List;
 public class CompanyService {
     private final CompanyRepository repository;
     private final CloudinaryService cloudinaryService;
+
     public Company getById(Long company) {
         return repository.findById(company).orElseThrow(() -> new RuntimeException("Company not found"));
     }
 
     public void save(CompanyBindingModel bindingModel) {
-        String logoUrl = cloudinaryService.uploadImage(bindingModel.getLogo());
+        String logoUrl = null;
+        if (bindingModel.getLogo() != null) {
+            logoUrl = cloudinaryService.uploadImage(bindingModel.getLogo());
+        }
+
         repository.save(new Company(bindingModel, logoUrl));
+    }
+
+    public void save(Company company) {
+        repository.save(company);
     }
 }

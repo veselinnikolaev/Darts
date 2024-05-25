@@ -26,14 +26,9 @@ public class HomeController extends BaseController{
 
     @PostMapping("/")
     public ModelAndView search(String keyword,
-                               String location,
-                               @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "5") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<JobApplication> jobsPage = jobApplicationService.getAll(keyword, location, pageable);
-        return getWithLocations("/job/listing")
-                .addObject("jobsPage", jobsPage)
-                .addObject("jobApplicationService", jobApplicationService);
+                               String location) {
+        jobApplicationService.search(keyword);
+        return new ModelAndView("redirect:/jobs/all?keyword=%s&location=%s".formatted(keyword, location));
     }
 
     @GetMapping("/about")
