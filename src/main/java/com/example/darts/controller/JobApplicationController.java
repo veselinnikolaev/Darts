@@ -52,7 +52,9 @@ public class JobApplicationController extends BaseController {
                     .filter(ja -> ja.getLocation().getCity().equals(locationEntity.getCity()))
                     .toList();
         }
-
+        if(jobApplicationService.getAll(keyword, location) != null && jobApplications.size() != 0) {
+            jobApplications.addAll(jobApplicationService.getAll(keyword, location));
+        }
         Page<JobApplication> jobsPage =
                 new PageImpl<>(jobApplications, PageRequest.of(page, size), jobApplications.size());
         return getWithLocations("/job/listing")
@@ -84,8 +86,8 @@ public class JobApplicationController extends BaseController {
             return getWithLocationsExperienceLevelsAndSkills("/job/post")
                     .addObject("companies", account.getCompanies());
         }
-        jobApplicationService.save(bindingModel, account);
-        return new ModelAndView("redirect:/jobs/all");
+        jobApplicationService.save(bindingModel);
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/apply/{id}")
@@ -95,6 +97,6 @@ public class JobApplicationController extends BaseController {
 
         jobApplicationService.apply(jobApplication, account);
 
-        return new ModelAndView("redirect:/jobs/all");
+        return new ModelAndView("redirect:/");
     }
 }

@@ -111,13 +111,13 @@
                             <h4>Job Overview</h4>
                         </div>
                         <ul>
-                            <li>Posted date : <span th:text="${job.posted.format('dd MMM yyyy')}">12 Aug 2019</span>
+                            <li>Posted date : <span th:text="${#temporals.format(job.posted, 'dd MMM yyyy')}">12 Aug 2019</span>
                             </li>
                             <li>Location : <span th:text="${job.location.getCity()}">New York</span></li>
                             <li>Vacancy : <span th:text="${job.vacancy}">02</span></li>
                             <li>Job nature : <span th:text="${job.employmentType.label}">Full time</span></li>
                             <li>Salary : <span th:text="${job.salary}">$7,800 yearly</span></li>
-                            <li>Application date : <span th:text="${job.due.format('dd MMM yyyy')}">12 Sep 2020</span>
+                            <li>Application date : <span th:text="${#temporals.format(job.due, 'dd MMM yyyy')}">12 Sep 2020</span>
                             </li>
                         </ul>
                         <form th:action="@{/jobs/apply/{id}(id=${job.id})}" th:method="POST" style="display:inline;">

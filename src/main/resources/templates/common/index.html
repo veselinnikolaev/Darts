@@ -159,7 +159,7 @@
                                 </a>
                             </div>
                             <div class="job-tittle">
-                                <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET"><h4 th:text="${job.position}">Digital Marketer</h4></a>
+                                <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET"><h4 th:text="${job.title}">Digital Marketer</h4></a>
                                 <ul>
                                     <li th:text="${job.company.name}">Creative Agency</li>
                                     <li th:text="${job.location.city + ', ' + job.location.region}"><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
@@ -168,7 +168,7 @@
                             </div>
                         </div>
                         <div class="items-link f-right">
-                            <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET" th:text="${job.jobNature.label}">Full Time</a>
+                            <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET" th:text="${job.employmentType.label}">Full Time</a>
                             <span th:text="${jobApplicationService.calculateTimeAgo(job.posted)}">7 hours ago</span>
                         </div>
                     </div>

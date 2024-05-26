@@ -186,7 +186,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="count-job mb-35">
-                                        <span th:text="${jobsPage.isEmpty() ? 'No' : jobsPage.getContent().size() + ' Jobs found'}">39, 782 Jobs found</span>
+                                        <span th:text="${jobsPage.isEmpty() ? 'No' : jobsPage.getContent().size() + ' Jobs found for ' + keyword}">39, 782 Jobs found</span>
                                         <!-- Select job items start -->
                                         <div class="select-job-items">
                                             <span>Sort by</span>
@@ -211,12 +211,18 @@
                                  th:each="job : ${jobsPage}">
                                 <div class="job-items">
                                     <div class="company-img">
-                                        <a th:href="@{/jobs/details/{id}(id=${job.id})}">
+                                        <a th:if="${job.getLink() == null}" th:href="@{/jobs/details/{id}(id=${job.id})}">
+                                            <img th:src="${job.company.logo == null ? '/img/entity/company_alt.png' : job.company.logo}" alt="">
+                                        </a>
+                                        <a th:unless="${job.getLink() == null}" th:href="${job.getLink()}">
                                             <img th:src="${job.company.logo == null ? '/img/entity/company_alt.png' : job.company.logo}" alt="">
                                         </a>
                                     </div>
                                     <div class="job-tittle job-tittle2">
-                                        <a th:href="@{/jobs/details/{id}(id=${job.id})}">
+                                        <a th:if="${job.getLink() == null}" th:href="@{/jobs/details/{id}(id=${job.id})}">
+                                            <h4 th:text="${job.title}"></h4>
+                                        </a>
+                                        <a th:unless="${job.getLink() == null}" th:href="${job.getLink()}">
                                             <h4 th:text="${job.title}"></h4>
                                         </a>
                                         <ul>
@@ -231,8 +237,10 @@
                                     </div>
                                 </div>
                                 <div class="items-link items-link2 f-right">
-                                    <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:text="${job.employmentType.label}">Full
-                                        Time</a>
+                                    <a th:if="${job.getLink() == null}" th:href="@{/jobs/details/{id}(id=${job.id})}"
+                                       th:text="${job.employmentType.label}"></a>
+                                    <a th:unless="${job.getLink() == null}" th:href="${job.getLink()}"
+                                       th:text="${job.employmentType.label}"></a>
                                     <span th:text="${jobApplicationService.calculateTimeAgo(job.posted)}">7 hours ago</span>
                                 </div>
                             </div>

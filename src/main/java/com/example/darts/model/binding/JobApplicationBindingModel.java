@@ -27,7 +27,6 @@ public class JobApplicationBindingModel {
     private Double salary;
     @NotNull
     private EmploymentType employmentType;
-    @Future
     private String due;
     @NotEmpty
     private List<Skill> skills;

@@ -26,6 +26,7 @@ import java.util.Random;
 public class JobApplication extends BaseEntity {
     private String title;
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "TEXT")
     private EmploymentType employmentType;
     @ManyToOne
     private Company company;
@@ -39,15 +40,19 @@ public class JobApplication extends BaseEntity {
     @ManyToMany(mappedBy = "jobApplications")
     private List<Skill> skills;
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "TEXT")
     private ExperienceLevel experienceLevel;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "TEXT")
     private Category category;
     @ManyToMany(mappedBy = "jobApplications")
     private List<Account> applicants;
+    @Transient
+    private String link;
 
-    public JobApplication(JobApplicationBindingModel bindingModel, Account account) {
+    public JobApplication(JobApplicationBindingModel bindingModel) {
         this.title = bindingModel.getPosition();
         this.company = bindingModel.getCompany();
         this.location = bindingModel.getLocation();
@@ -87,6 +92,7 @@ public class JobApplication extends BaseEntity {
         this.description = jobApplicationJSON.getJobDescription();
         this.category = Category.valueOf(jobApplicationJSON.getEmployerCompanyType().toUpperCase());
         this.applicants = new ArrayList<>(); // Assuming empty list for applicants
+        this.link = jobApplicationJSON.getJobApplyLink() == null ? jobApplicationJSON.getJobGoogleLink() : jobApplicationJSON.getJobApplyLink();
     }
 
     private List<Skill> createSkills(List<String> skillNames) {

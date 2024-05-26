@@ -43,9 +43,9 @@ public class JobApplicationService {
         return repository.findAll(pageable);
     }
 
-    public Page<JobApplication> getAll(String keyword, String location, Pageable pageable) {
+    public List<JobApplication> getAll(String keyword, String location) {
         if ((keyword.isEmpty() || keyword.isBlank()) && location.equals("all")) {
-            return repository.findAll(pageable);
+            return repository.findAll();
         }
 
         Specification<JobApplication> spec = Specification.where(hasKeyword(keyword));
@@ -55,7 +55,7 @@ public class JobApplicationService {
             spec = spec.and(hasLocation(locationEntity));
         }
 
-        return repository.findAll(spec, pageable);
+        return repository.findAll(spec);
     }
 
     public JobApplication getById(Long id) {
@@ -120,8 +120,8 @@ public class JobApplicationService {
         };
     }
 
-    public void save(JobApplicationBindingModel bindingModel, Account account) {
-        repository.save(new JobApplication(bindingModel, account));
+    public void save(JobApplicationBindingModel bindingModel) {
+        repository.save(new JobApplication(bindingModel));
     }
 
     public void apply(JobApplication jobApplication, Account account) {
@@ -144,6 +144,9 @@ public class JobApplicationService {
 
         accountService.save(account);
         repository.save(jobApplication);
+    }
+    public boolean existsById(Long id){
+        return repository.existsById(id);
     }
 
     public List<JobApplication> search(@NotNull String query,
