@@ -14,7 +14,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class LogoInit implements CommandLineRunner {
-    private static final String LOGO_PATH = "src/main/resources/static/img/logo/unsized_logo.png";
+    private static final String LOGO_PATH = "src/main/resources/static/img/logo/logo.png";
     private static final String OUTPUT_LOGO_PATH = "src/main/resources/static/img/logo/preloader_logo.png";
 
     @Override

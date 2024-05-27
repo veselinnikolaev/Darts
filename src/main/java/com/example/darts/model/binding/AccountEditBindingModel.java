@@ -21,7 +21,6 @@ public class AccountEditBindingModel {
     @Size(min = 3, max = 20, message = "Last name length must be between 3 and 20 characters!")
     private String lastName;
     @Email(message = "Invalid email!")
-    @UniqueEmail(message = "Email already exists!")
     @NotBlank(message = "Email cannot be empty!")
     private String email;
     private Location location;

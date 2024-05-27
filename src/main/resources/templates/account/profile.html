@@ -100,7 +100,7 @@
                 <div class="col-md-4" th:unless="${account.projects.isEmpty()}" th:each="project : ${account.projects.stream().limit(6).toList()}">
                     <div class="work-box">
                         <div class="work-img">
-                            <img th:src="${project.photo == null ? project.skills.get(0).photoUrl : project.photo}" class="img-fluid" alt="">
+                            <img th:src="${project.photo == null ? project.skills.get(0).photoUrl : project.photo}" class="img-fluid img-entity" alt="">
                         </div>
                         <div class="work-content">
                             <div class="row">

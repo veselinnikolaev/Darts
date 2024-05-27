@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -39,11 +40,11 @@ public class JobApplicationController extends BaseController {
                              @RequestParam(value = "postedWithin", required = false) DatePosted postedWithin) {
         List<JobApplication> jobApplications;
         if (category == null || employmentTypes == null || experienceLevels == null || postedWithin == null) {
-            jobApplications = jobApplicationService.search(keyword);
+            jobApplications = new ArrayList<>(jobApplicationService.search(keyword));
         } else {
-            jobApplications = jobApplicationService.search(
+            jobApplications = new ArrayList<>(jobApplicationService.search(
                     keyword, postedWithin, employmentTypes, experienceLevels, List.of(category)
-            );
+            ));
         }
 
         if (!location.equals("all")) {
@@ -52,7 +53,7 @@ public class JobApplicationController extends BaseController {
                     .filter(ja -> ja.getLocation().getCity().equals(locationEntity.getCity()))
                     .toList();
         }
-        if(jobApplicationService.getAll(keyword, location) != null && jobApplications.size() != 0) {
+        if(jobApplicationService.getAll(keyword, location) != null && !jobApplications.isEmpty()) {
             jobApplications.addAll(jobApplicationService.getAll(keyword, location));
         }
         Page<JobApplication> jobsPage =

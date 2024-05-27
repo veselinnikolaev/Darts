@@ -62,7 +62,9 @@
                                     <div class="select-itms">
                                         <select name="location">
                                             <option value="all">Anywhere</option>
-                                            <option th:each="location : ${allLocations}" th:value="${location.id}" th:text="${location.city + ', ' + location.region}">Location BD</option>
+                                            <option th:each="location : ${allLocations}" th:value="${location.id}"
+                                                    th:text="${location.city + ', ' + location.region}">Location BD
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -90,13 +92,16 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6" th:each="jobApplicationCategory : ${T(com.example.darts.model.enumeration.Category).values()}">
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6"
+                     th:each="jobApplicationCategory : ${T(com.example.darts.model.enumeration.Category).values()}">
                     <div class="single-services text-center mb-30">
                         <div class="services-ion">
                             <span th:class="${'flaticon-' + jobApplicationCategory.name.toLowerCase()}"></span>
                         </div>
                         <div class="services-cap">
-                            <h5><a th:href="@{/jobs/all/{category}(category=${jobApplicationCategory.name().toLowerCase()})}" th:method="GET" th:text="${jobApplicationCategory.label}"></a></h5>
+                            <h5>
+                                <a th:href="@{/jobs/all/{category}(category=${jobApplicationCategory.name().toLowerCase()})}"
+                                   th:method="GET" th:text="${jobApplicationCategory.label}"></a></h5>
                             <span th:text="${jobApplicationService.getAllByCategory(jobApplicationCategory).size()}">(653)</span>
                         </div>
                     </div>
@@ -121,11 +126,12 @@
                 <div class="col-xl-10">
                     <div sec:authorize="isAuthenticated()" class="cv-caption text-center">
                         <p class="pera2"> Make a Difference with Your Online Resume!</p>
-                        <a  th:href="@{/account/profile}" class="border-btn2 border-btn4">Upload your cv</a>
+                        <a th:href="@{/account/profile}" class="border-btn2 border-btn4">Upload your cv</a>
                     </div>
                     <div sec:authorize="isAnonymous()" class="cv-caption text-center">
                         <p class="pera2"> Make a Difference! Start now!</p>
-                        <p class="pera2"><a th:href="@{/account/register}" class="border-btn2 border-btn4">Register</a> or <a th:href="@{/account/login}" class="border-btn2 border-btn4">Login</a></p>
+                        <p class="pera2"><a th:href="@{/account/register}" class="border-btn2 border-btn4">Register</a>
+                            or <a th:href="@{/account/login}" class="border-btn2 border-btn4">Login</a></p>
                     </div>
                 </div>
             </div>
@@ -155,20 +161,25 @@
                         <div class="job-items">
                             <div class="company-img img-entity">
                                 <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET">
-                                    <img th:src="${job.company.logo == null ? '/img/entity/company_alt.png' : job.company.logo}" alt="">
+                                    <img class="img-entity" th:src="${job.company.logo == null ? '/img/entity/company_alt.png' : job.company.logo}"
+                                         alt="">
                                 </a>
                             </div>
                             <div class="job-tittle">
-                                <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET"><h4 th:text="${job.title}">Digital Marketer</h4></a>
+                                <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET"><h4
+                                        th:text="${job.title}">Digital Marketer</h4></a>
                                 <ul>
                                     <li th:text="${job.company.name}">Creative Agency</li>
-                                    <li th:text="${job.location.city + ', ' + job.location.region}"><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
+                                    <li th:text="${job.location.city + ', ' + job.location.region}"><i
+                                            class="fas fa-map-marker-alt"></i>Athens, Greece
+                                    </li>
                                     <li th:text="${job.salary}">$3500 - $4000</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="items-link f-right">
-                            <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET" th:text="${job.employmentType.label}">Full Time</a>
+                            <a th:href="@{/jobs/details/{id}(id=${job.id})}" th:method="GET"
+                               th:text="${job.employmentType.label}">Full Time</a>
                             <span th:text="${jobApplicationService.calculateTimeAgo(job.posted)}">7 hours ago</span>
                         </div>
                     </div>
@@ -245,15 +256,14 @@
                                 <!-- founder -->
                                 <div class="testimonial-founder  ">
                                     <div class="founder-img mb-30">
-                                        <img src="/img/testmonial/testimonial-founder.png" alt="">
-                                        <span>Margaret Lawson</span>
-                                        <p>Creative Director</p>
+                                        <img class="img-entity" src="https://cdns-images.dzcdn.net/images/cover/5489c2e7a1e2948c62750898a5e79f49/264x264.jpg"
+                                             alt="">
+                                        <span>Boqn Raychev</span>
+                                        <p>Marketing head</p>
                                     </div>
                                 </div>
                                 <div class="testimonial-top-cap">
-                                    <p>“I am at an age where I just want to be fit and healthy our bodies are our
-                                        responsibility! So start caring for your body and it will care for you. Eat
-                                        clean it will care for you and workout hard.”</p>
+                                    <p>“Bello bellissimo”</p>
                                 </div>
                             </div>
                         </div>
@@ -264,15 +274,15 @@
                                 <!-- founder -->
                                 <div class="testimonial-founder  ">
                                     <div class="founder-img mb-30">
-                                        <img src="/img/testmonial/testimonial-founder.png" alt="">
-                                        <span>Margaret Lawson</span>
-                                        <p>Creative Director</p>
+                                        <img class="img-entity" src="https://i.scdn.co/image/ab6761610000e5eb3d352b74d358d582b51c399a"
+                                             alt="">
+                                        <span>Veselin Nikolaev</span>
+                                        <p>Front-end developer</p>
                                     </div>
                                 </div>
                                 <div class="testimonial-top-cap">
-                                    <p>“I am at an age where I just want to be fit and healthy our bodies are our
-                                        responsibility! So start caring for your body and it will care for you. Eat
-                                        clean it will care for you and workout hard.”</p>
+                                    <p>“Всички са на Сен Тропе/ Други на Малдивите/ В Дубай пък третите, ах, ле-ле-лей,
+                                        ах, ле-ле-лей”</p>
                                 </div>
                             </div>
                         </div>
@@ -283,15 +293,14 @@
                                 <!-- founder -->
                                 <div class="testimonial-founder  ">
                                     <div class="founder-img mb-30">
-                                        <img src="/img/testmonial/testimonial-founder.png" alt="">
-                                        <span>Margaret Lawson</span>
-                                        <p>Creative Director</p>
+                                        <img class="img-entity" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ491I-a14n4SUNrKiMMAGES69oVX-29bS6EFYEqQQusw&s"
+                                             alt="">
+                                        <span>Yavor Lukanov</span>
+                                        <p>Back-end developer</p>
                                     </div>
                                 </div>
                                 <div class="testimonial-top-cap">
-                                    <p>“I am at an age where I just want to be fit and healthy our bodies are our
-                                        responsibility! So start caring for your body and it will care for you. Eat
-                                        clean it will care for you and workout hard.”</p>
+                                    <p>“Meow meow”</p>
                                 </div>
                             </div>
                         </div>
