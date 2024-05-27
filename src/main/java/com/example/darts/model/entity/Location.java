@@ -29,6 +29,7 @@ public class Location extends BaseEntity{
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
         this.region = location.getRegion();
+        this.country = "Bulgaria";
     }
 
     public Location(String city, Double latitude, Double longitude, String country){

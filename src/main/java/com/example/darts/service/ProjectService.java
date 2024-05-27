@@ -13,8 +13,10 @@ public class ProjectService {
     private final ProjectRepository repository;
     private final CloudinaryService cloudinaryService;
     public void save(ProjectCreateBindingModel bindingModel, Account account) {
-        String photoUrl = null;
-        if(bindingModel.getPhoto() != null){
+        String photoUrl;
+        if(bindingModel.getPhoto().isEmpty()){
+            photoUrl = bindingModel.getSkills().get(0).getPhotoUrl();
+        } else {
             photoUrl = cloudinaryService.uploadImage(bindingModel.getPhoto());
         }
 

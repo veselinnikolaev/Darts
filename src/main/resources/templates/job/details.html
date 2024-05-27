@@ -69,7 +69,7 @@
                                 <ul>
                                     <li th:text="${job.company.name}">Creative Agency</li>
                                     <li><i class="fas fa-map-marker-alt"
-                                           th:text="${job.location.getCity() + ', ' + job.location.getRegion()}"></i>
+                                           th:text="${job.location.city + ', ' + job.location.region}"></i>
                                     </li>
                                     <li th:text="${job.salary}">$3500 - $4000</li>
                                 </ul>

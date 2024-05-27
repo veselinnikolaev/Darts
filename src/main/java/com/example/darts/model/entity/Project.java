@@ -26,6 +26,7 @@ public class Project extends BaseEntity {
     @ManyToMany
     private List<Skill> skills;
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "TEXT")
     private Category category;
 
     public Project(ProjectCreateBindingModel bindingModel, Account account, String photoUrl) {

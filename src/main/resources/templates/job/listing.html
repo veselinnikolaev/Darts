@@ -115,7 +115,7 @@
                                     <option value="all">Anywhere</option>
                                     <option th:each="locationChoice : ${allLocations}"
                                             th:value="${locationChoice.id}"
-                                            th:text="${locationChoice.city + ', ' + locationChoice.region}"></option>
+                                            th:text="${locationChoice.city + ', ' + locationChoice.region == null ? locationChoice.country : locationChoice.region + ', ' + locationChoice.country}"></option>
                                 </select>
                             </div>
                             <!--  Select job items End-->
@@ -228,7 +228,7 @@
                                         <ul>
                                             <li th:text="${job.title}">Creative Agency</li>
                                             <li><i class="fas fa-map-marker-alt"
-                                                   th:text="${job.location.getRegion() == null ?
+                                                   th:text="${job.location.region == null ?
                                                    job.location.getCity() + ', ' + job.location.getCountry() :
                                                    job.location.getCity() + ', ' + job.location.getRegion()}"></i>
                                             </li>

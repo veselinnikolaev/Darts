@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class JobApplicationService {
-    private static final String API_KEY = "2d0117507cmsh9f965f575c68806p10779fjsnee40ef16a198";
+    private static final String API_KEY = "8b7be72d58msh30a5a7f6c6c42e3p1d02a6jsn795a86f8c1f3";
     private static final String API_HOST = "jsearch.p.rapidapi.com";
     private final Gson gson;
     private final JobApplicationRepository repository;
@@ -50,7 +51,7 @@ public class JobApplicationService {
 
         Specification<JobApplication> spec = Specification.where(hasKeyword(keyword));
 
-        if (!location.equals("all")) {
+        if (location != null && !location.equals("all")) {
             Location locationEntity = locationService.getById(Long.parseLong(location));
             spec = spec.and(hasLocation(locationEntity));
         }
@@ -64,11 +65,17 @@ public class JobApplicationService {
     }
 
     public Page<JobApplication> getAllByCategory(Category category, Pageable pageable) {
-        return repository.findAllByCategory(category, pageable);
+        List<JobApplication> allByCategory = getAllByCategory(category);
+        return new PageImpl<>(allByCategory, pageable, allByCategory.size());
     }
 
     public List<JobApplication> getAllByCategory(Category category) {
-        return repository.findAllByCategory(category);
+        List<JobApplication> allByCategory = repository.findAllByCategory(category);
+        //String response = restRequest("https://jsearch.p.rapidapi.com/search?query=marketing%20manager%20in%20new%20york%20via%20linkedin&page=1&num_pages=1&remote_jobs_only=false&categories="
+        //        + category.getValue());
+        //allByCategory.addAll(parseJobApplications(response));
+
+        return allByCategory;
     }
 
     public List<JobApplication> getTop5JobApplicationsByDatePosted() {
@@ -106,7 +113,8 @@ public class JobApplicationService {
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("company").get("name")), likePattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("company").get("description")), likePattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("location").get("city")), likePattern),
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("location").get("region")), likePattern)
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("location").get("region")), likePattern),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("location").get("country")), likePattern)
             );
         };
     }
@@ -145,15 +153,21 @@ public class JobApplicationService {
         accountService.save(account);
         repository.save(jobApplication);
     }
-    public boolean existsById(Long id){
+
+    public boolean existsById(Long id) {
         return repository.existsById(id);
     }
 
-    public List<JobApplication> search(@NotNull String query,
+    public List<JobApplication> search(@NotNull String query, String location,
                                        DatePosted datePosted, List<EmploymentType> employmentTypes,
                                        List<ExperienceLevel> experienceLevels, List<Category> categories) {
-        String searchUrl = getUrl(query, datePosted, employmentTypes, experienceLevels, categories);
+        String searchUrl = getUrl(query, location, datePosted, employmentTypes, experienceLevels, categories);
 
+        String response = restRequest(searchUrl);
+        return parseJobApplications(response);
+    }
+
+    private String restRequest(String searchUrl) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(searchUrl))
                 .header("X-RapidAPI-Key", API_KEY)
@@ -165,48 +179,39 @@ public class JobApplicationService {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception ignored) {
         }
-        return gson.fromJson(response.body(), JobApplicationData.class).getJobApplicationJSONs()
-                .stream()
-                .map(ja ->
-                        new JobApplication(ja, locationService.existsByCity(ja.getJobCity()) ?
-                                locationService.getByCity(ja.getJobCity()) :
-                                locationService.save(
-                                        new Location(ja.getJobCity(), ja.getJobLatitude(),
-                                                ja.getJobLongitude(), ja.getJobCountry())))
-                )
-                .toList();
+        return response.body();
     }
 
-    public List<JobApplication> search(@NotNull String query) {
-        String searchUrl = getUrl(query);
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(searchUrl))
-                .header("X-RapidAPI-Key", API_KEY)
-                .header("X-RapidAPI-Host", API_HOST)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> response = null;
-        try {
-            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception ignored) {
+    private List<JobApplication> parseJobApplications(String response) {
+        List<JobApplicationJSON> jobApplicationJSONs = gson.fromJson(response, JobApplicationData.class).getJobApplicationJSONs();
+        if(jobApplicationJSONs != null) {
+                return jobApplicationJSONs.stream()
+                    .map(ja ->
+                            new JobApplication(ja, locationService.existsByCity(ja.getJobCity()) ?
+                                    locationService.getByCity(ja.getJobCity()) :
+                                    locationService.save(
+                                            new Location(ja.getJobCity(), ja.getJobLatitude(),
+                                                    ja.getJobLongitude(), ja.getJobCountry())))
+                    )
+                    .toList();
         }
-        System.out.println(response.body());
-        return gson.fromJson(response.body(), JobApplicationData.class).getJobApplicationJSONs()
-                .stream()
-                .map(ja ->
-                        new JobApplication(ja, locationService.existsByCity(ja.getJobCity()) ?
-                                locationService.getByCity(ja.getJobCity()) :
-                                locationService.save(
-                                        new Location(ja.getJobCity(), ja.getJobLatitude(),
-                                                ja.getJobLongitude(), ja.getJobCountry())))
-                )
-                .toList();
+        return new ArrayList<>();
     }
 
-    private String getUrl(@NotNull String query,
+    public List<JobApplication> search(@NotNull String query, String location) {
+        String searchUrl = getUrl(query, location);
+
+        String response = restRequest(searchUrl);
+        return parseJobApplications(response);
+    }
+
+    private String getUrl(@NotNull String query, String location,
                           DatePosted datePosted, List<EmploymentType> employmentTypes,
                           List<ExperienceLevel> experienceLevels, List<Category> categories) {
+        if (!location.equals("all")) {
+            Location locationObject = locationService.getById(Long.parseLong(location));
+            query = query.concat(" %s %s").formatted(locationObject.getCity(), locationObject.getCountry());
+        }
         String validQuery = query.replace(" ", "%20").replace(",", "%2C");
         String datePostedValue = datePosted.getValue();
         String empTypesValues = String.join("%2C", employmentTypes.stream().map(EmploymentType::getValue).toList());
@@ -217,7 +222,11 @@ public class JobApplicationService {
                 .formatted(validQuery, datePostedValue, empTypesValues, expLevelsValues, categoriesValues);
     }
 
-    private String getUrl(@NotNull String query) {
+    private String getUrl(@NotNull String query, String location) {
+        if (location != null && !location.equals("all")) {
+            Location locationObject = locationService.getById(Long.parseLong(location));
+            query = query.concat(" %s %s").formatted(locationObject.getCity(), locationObject.getCountry());
+        }
         String validQuery = query.replace(" ", "%20").replace(",", "%2C");
         String datePostedAllValue = DatePosted.ALL.getValue();
         String empTypesAllValues = String.join("%2C", Arrays.stream(EmploymentType.values()).map(EmploymentType::getValue).toList());

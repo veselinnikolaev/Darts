@@ -32,7 +32,7 @@ public class JobApplicationController extends BaseController {
     }
 
     @GetMapping("/all")
-    public ModelAndView jobs(@RequestParam(required = false) String keyword, @RequestParam(required = false) String location,
+    public ModelAndView jobs(@RequestParam String keyword, @RequestParam(required = false) String location,
                              @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
                              @RequestParam(value = "category", required = false) Category category,
                              @RequestParam(value = "employmentTypes", required = false) List<EmploymentType> employmentTypes,
@@ -40,19 +40,13 @@ public class JobApplicationController extends BaseController {
                              @RequestParam(value = "postedWithin", required = false) DatePosted postedWithin) {
         List<JobApplication> jobApplications;
         if (category == null || employmentTypes == null || experienceLevels == null || postedWithin == null) {
-            jobApplications = new ArrayList<>(jobApplicationService.search(keyword));
+            jobApplications = new ArrayList<>(jobApplicationService.search(keyword, location));
         } else {
             jobApplications = new ArrayList<>(jobApplicationService.search(
-                    keyword, postedWithin, employmentTypes, experienceLevels, List.of(category)
+                    keyword, location, postedWithin, employmentTypes, experienceLevels, List.of(category)
             ));
         }
 
-        if (!location.equals("all")) {
-            Location locationEntity = locationService.getById(Long.parseLong(location));
-            jobApplications = jobApplications.stream()
-                    .filter(ja -> ja.getLocation().getCity().equals(locationEntity.getCity()))
-                    .toList();
-        }
         if(jobApplicationService.getAll(keyword, location) != null && !jobApplications.isEmpty()) {
             jobApplications.addAll(jobApplicationService.getAll(keyword, location));
         }

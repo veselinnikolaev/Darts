@@ -27,7 +27,7 @@ public class HomeController extends BaseController{
     @PostMapping("/")
     public ModelAndView search(String keyword,
                                String location) {
-        jobApplicationService.search(keyword);
+        jobApplicationService.search(keyword, location);
         return new ModelAndView("redirect:/jobs/all?keyword=%s&location=%s".formatted(keyword, location));
     }
 

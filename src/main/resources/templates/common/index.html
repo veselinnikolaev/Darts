@@ -63,7 +63,7 @@
                                         <select name="location">
                                             <option value="all">Anywhere</option>
                                             <option th:each="location : ${allLocations}" th:value="${location.id}"
-                                                    th:text="${location.city + ', ' + location.region}">Location BD
+                                                    th:text="${location.city + ', ' + location.region == null ? location.country : location.region + ', ' + location.country}">Location BD
                                             </option>
                                         </select>
                                     </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="services-cap">
                             <h5>
-                                <a th:href="@{/jobs/all/{category}(category=${jobApplicationCategory.name().toLowerCase()})}"
+                                <a th:href="@{/jobs/all/(keyword=${jobApplicationCategory.label}, category=${jobApplicationCategory})}"
                                    th:method="GET" th:text="${jobApplicationCategory.label}"></a></h5>
                             <span th:text="${jobApplicationService.getAllByCategory(jobApplicationCategory).size()}">(653)</span>
                         </div>
@@ -112,7 +112,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="browse-btn2 text-center mt-50">
-                        <a th:href="@{/jobs/all}" th:method="GET" class="border-btn2">Browse All Sectors</a>
+                        <a th:href="@{/jobs/all(keyword='marketing manager in new york via linkedin')}" th:method="GET" class="border-btn2">Browse All Sectors</a>
                     </div>
                 </div>
             </div>
@@ -170,7 +170,7 @@
                                         th:text="${job.title}">Digital Marketer</h4></a>
                                 <ul>
                                     <li th:text="${job.company.name}">Creative Agency</li>
-                                    <li th:text="${job.location.city + ', ' + job.location.region}"><i
+                                    <li th:text="${job.location.city + ', ' + job.location.region == null ? job.location.country : job.location.region + ', ' + job.location.country}"><i
                                             class="fas fa-map-marker-alt"></i>Athens, Greece
                                     </li>
                                     <li th:text="${job.salary}">$3500 - $4000</li>
@@ -189,126 +189,10 @@
     </section>
     <!-- Featured_job_end -->
     <!-- How  Apply Process Start-->
-    <div class="apply-process-area apply-bg pt-150 pb-150" data-background="/img/gallery/how-applybg.png">
-        <div class="container">
-            <!-- Section Tittle -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-tittle white-text text-center">
-                        <span>Apply process</span>
-                        <h2> How it works</h2>
-                    </div>
-                </div>
-            </div>
-            <!-- Apply Process Caption -->
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-process text-center mb-30">
-                        <div class="process-ion">
-                            <span class="flaticon-search"></span>
-                        </div>
-                        <div class="process-cap">
-                            <h5>1. Search a job</h5>
-                            <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
-                                laborea.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-process text-center mb-30">
-                        <div class="process-ion">
-                            <span class="flaticon-curriculum-vitae"></span>
-                        </div>
-                        <div class="process-cap">
-                            <h5>2. Apply for job</h5>
-                            <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
-                                laborea.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-process text-center mb-30">
-                        <div class="process-ion">
-                            <span class="flaticon-tour"></span>
-                        </div>
-                        <div class="process-cap">
-                            <h5>3. Get your job</h5>
-                            <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
-                                laborea.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <th:block th:replace="~{/fragment/how-apply-process}"></th:block>
     <!-- How  Apply Process End-->
     <!-- Testimonial Start -->
-    <div class="testimonial-area testimonial-padding">
-        <div class="container">
-            <!-- Testimonial contents -->
-            <div class="row d-flex justify-content-center">
-                <div class="col-xl-8 col-lg-8 col-md-10">
-                    <div class="h1-testimonial-active dot-style">
-                        <!-- Single Testimonial -->
-                        <div class="single-testimonial text-center">
-                            <!-- Testimonial Content -->
-                            <div class="testimonial-caption ">
-                                <!-- founder -->
-                                <div class="testimonial-founder  ">
-                                    <div class="founder-img mb-30">
-                                        <img class="img-entity" src="https://cdns-images.dzcdn.net/images/cover/5489c2e7a1e2948c62750898a5e79f49/264x264.jpg"
-                                             alt="">
-                                        <span>Boqn Raychev</span>
-                                        <p>Marketing head</p>
-                                    </div>
-                                </div>
-                                <div class="testimonial-top-cap">
-                                    <p>“Bello bellissimo”</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Testimonial -->
-                        <div class="single-testimonial text-center">
-                            <!-- Testimonial Content -->
-                            <div class="testimonial-caption ">
-                                <!-- founder -->
-                                <div class="testimonial-founder  ">
-                                    <div class="founder-img mb-30">
-                                        <img class="img-entity" src="https://i.scdn.co/image/ab6761610000e5eb3d352b74d358d582b51c399a"
-                                             alt="">
-                                        <span>Veselin Nikolaev</span>
-                                        <p>Front-end developer</p>
-                                    </div>
-                                </div>
-                                <div class="testimonial-top-cap">
-                                    <p>“Всички са на Сен Тропе/ Други на Малдивите/ В Дубай пък третите, ах, ле-ле-лей,
-                                        ах, ле-ле-лей”</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Testimonial -->
-                        <div class="single-testimonial text-center">
-                            <!-- Testimonial Content -->
-                            <div class="testimonial-caption ">
-                                <!-- founder -->
-                                <div class="testimonial-founder  ">
-                                    <div class="founder-img mb-30">
-                                        <img class="img-entity" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ491I-a14n4SUNrKiMMAGES69oVX-29bS6EFYEqQQusw&s"
-                                             alt="">
-                                        <span>Yavor Lukanov</span>
-                                        <p>Back-end developer</p>
-                                    </div>
-                                </div>
-                                <div class="testimonial-top-cap">
-                                    <p>“Meow meow”</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <th:block th:replace="~{/fragment/testimonial}"></th:block>
     <!-- Testimonial End -->
     <!-- Support Company Start-->
     <div class="support-company-area support-padding fix">

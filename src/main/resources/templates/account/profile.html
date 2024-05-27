@@ -47,7 +47,8 @@
                             <div class="col-md-6">
                                 <div class="about-img">
                                     <img th:unless="${account == null}" th:src="${account.photo}" class="img-fluid rounded b-shadow-a img-entity" alt="">
-                                    <img th:if="${account == null}" src="/img/entity/account_alt.png" class="img-fluid rounded b-shadow-a img-entity" alt="">
+                                    <img th:if="${account == null}" src="https://www.refugee-action.org.uk/wp-content/uploads/2016/10/anonymous-user.png"
+                                         class="img-fluid rounded b-shadow-a img-entity" alt="">
                                 </div>
                                 <div class="about-info mt-3">
                                     <h5><span class="title-s">First Name: </span><span th:text="${account.firstName}"></span></h5>
@@ -112,7 +113,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="w-like">
-                                        <a th:href="@{/projects/details/{id}(id=${project.id})}"><span class="bi bi-plus-circle"></span></a>
+                                        <a th:href="@{/projects/details/{id}(id=${project.id})}"><span class="bi bi-plus-circle btn btn-primary">View</span></a>
                                     </div>
                                 </div>
                             </div>

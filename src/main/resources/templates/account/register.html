@@ -107,7 +107,7 @@
                         <select class="form-control" id="location" name="location">
                             <option selected="selected" disabled>Select location</option>
                             <option th:each="location : ${allLocations}" th:value="${location.id}"
-                                    th:text="${location.city + ', ' + location.region}"></option>
+                                    th:text="${location.city + ', ' + location.region == null ? location.country : location.region + ', ' + location.country}"></option>
                         </select>
                     </div>
                     <div class="form-group">

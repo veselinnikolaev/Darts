@@ -1,7 +1,6 @@
 package com.example.darts.repository;
 
 import com.example.darts.model.entity.JobApplication;
-import com.example.darts.model.entity.Location;
 import com.example.darts.model.enumeration.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

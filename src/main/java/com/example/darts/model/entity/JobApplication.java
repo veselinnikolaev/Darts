@@ -90,7 +90,7 @@ public class JobApplication extends BaseEntity {
         }
         this.experienceLevel = ExperienceLevel.parse(jobApplicationJSON.getJobRequiredExperience());
         this.description = jobApplicationJSON.getJobDescription();
-        this.category = Category.valueOf(jobApplicationJSON.getEmployerCompanyType().toUpperCase());
+        this.category = Category.valueOf(jobApplicationJSON.getEmployerCompanyType().toUpperCase().replace(" ", "_"));
         this.applicants = new ArrayList<>(); // Assuming empty list for applicants
         this.link = jobApplicationJSON.getJobApplyLink() == null ? jobApplicationJSON.getJobGoogleLink() : jobApplicationJSON.getJobApplyLink();
     }
