@@ -33,7 +33,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class JobApplicationService {
-    private static final String API_KEY = "8b7be72d58msh30a5a7f6c6c42e3p1d02a6jsn795a86f8c1f3";
+    private static final String API_KEY = "";
     private static final String API_HOST = "jsearch.p.rapidapi.com";
     private final Gson gson;
     private final JobApplicationRepository repository;
